@@ -4,9 +4,9 @@ import { Text, StyleSheet, Platform } from 'react-native';
 
 
 
-const AppText = ({ children }) => {
+const AppText = ({ passedStyle, children }) => {
     return (
-        <Text style={styles.text}>{children}</Text>
+        <Text style={[styles.text, passedStyle]}>{children}</Text>
     );
 }
 

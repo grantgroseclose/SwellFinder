@@ -12,6 +12,8 @@ import AppText from './components/AppText'
 import AppButton from './components/AppButton';
 
 import StartScreen from './screens/StartScreen';
+import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,10 +39,12 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <StackNavigator />
-      <StatusBar barStyle='dark-content'></StatusBar>
-    </NavigationContainer>
+    // <NavigationContainer>
+    //   <StackNavigator />
+    //   <StatusBar barStyle='dark-content'></StatusBar>
+    // </NavigationContainer>
+
+    <RegisterScreen/>
   );
 }
 
@@ -48,10 +52,5 @@ export default function App() {
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.primary,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  
 });

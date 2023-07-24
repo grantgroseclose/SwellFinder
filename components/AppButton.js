@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
         color: colors.black,
         fontSize: 18,
         textTransform: 'uppercase',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontFamily: 'Avenir'
     }
 })
 
