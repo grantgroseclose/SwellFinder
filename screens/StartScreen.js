@@ -13,7 +13,7 @@ const screenHeight = Dimensions.get('window').height;
 
 
 
-const StartScreen = () => {
+const StartScreen = ({ navigation }) => {
     return (
         <Screen passedStyle={{justifyContent: 'space-evenly'}}>
             <View style={styles.logoContainer}>
@@ -21,8 +21,8 @@ const StartScreen = () => {
             </View>
 
             <View style={styles.buttonsContainer}>
-                <AppButton title="Login"/>
-                <AppButton title="Register"/>
+                <AppButton title="Login" onPress={() => navigation.navigate('Login')} />
+                <AppButton title="Register" onPress={() => navigation.navigate('Register')} />
             </View>
 
             <StatusBar barStyle='dark-content'></StatusBar>

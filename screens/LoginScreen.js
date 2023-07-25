@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar, Dimensions, StyleSheet, View, Text } from 'react-native';
+import { Dimensions, StyleSheet, View, Text } from 'react-native';
 import * as Yup from 'yup';
 
 import colors from '../config/colors';
@@ -52,8 +52,6 @@ const LoginScreen = (props) => {
 
                 <AppSubmitButton title='Login' />
             </AppForm>
-
-            <StatusBar barStyle='dark-content'></StatusBar>
         </Screen>
     );
 }

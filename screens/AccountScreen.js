@@ -19,11 +19,11 @@ const validationSchema = Yup.object().shape({
 
 
 
-const RegisterScreen = (props) => {
+const AccountScreen = (props) => {
     return (
         <Screen passedStyle={{justifyContent: 'flex-start'}}>
             <View style={styles.logoContainer}>
-                <Text style={styles.logoText}>New Account</Text>
+                <Text style={styles.logoText}>Account</Text>
             </View>
 
             
@@ -71,7 +71,7 @@ const RegisterScreen = (props) => {
                     />
                 </View>
 
-                <AppSubmitButton title='Register' />
+                <AppSubmitButton title='Update' />
             </AppForm>
         </Screen>
     );
@@ -102,4 +102,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default RegisterScreen;
+export default AccountScreen;

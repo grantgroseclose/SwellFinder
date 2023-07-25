@@ -14,16 +14,28 @@ import AppButton from './components/AppButton';
 import StartScreen from './screens/StartScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import AccountScreen from './screens/AccountScreen';
+import HomeScreen from './screens/HomeScreen';
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 
 
 
 const StackNavigator = () => (
-  <Stack.Navigator>
+  <Stack.Navigator screenOptions={{ headerTransparent: true, title: '', headerTintColor: colors.light }}>
     <Stack.Screen name="Start" component={StartScreen} options={{ headerShown: false }} />
+    <Stack.Screen name="Login" component={LoginScreen} />
+    <Stack.Screen name="Register" component={RegisterScreen} />
   </Stack.Navigator>
+);
+
+const TabNavigator = () => (
+  <Tab.Navigator screenOptions={{ headerTransparent: true, headerTintColor: colors.light }}>
+    <Tab.Screen name='Home' component={StackNavigator} />
+    <Tab.Screen name='Account' component={StackNavigator} />
+  </Tab.Navigator>
 );
 
 
@@ -31,7 +43,15 @@ const StackNavigator = () => (
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    'Inter-Black': require('./assets/fonts/Inter-Black.ttf')
+    'Inter-Black': require('./assets/fonts/Inter-Black.ttf'),
+    'Inter-Bold': require('./assets/fonts/Inter-Bold.ttf'),
+    'Inter-ExtraBold': require('./assets/fonts/Inter-ExtraBold.ttf'),
+    'Inter-ExtraLight': require('./assets/fonts/Inter-ExtraLight.ttf'),
+    'Inter-Light': require('./assets/fonts/Inter-Light.ttf'),
+    'Inter-Medium': require('./assets/fonts/Inter-Medium.ttf'),
+    'Inter-Regular': require('./assets/fonts/Inter-Regular.ttf'),
+    'Inter-SemiBold': require('./assets/fonts/Inter-SemiBold.ttf'),
+    'Inter-Thin': require('./assets/fonts/Inter-Thin.ttf'),
   });
 
   if (!fontsLoaded) {
@@ -44,7 +64,7 @@ export default function App() {
     //   <StatusBar barStyle='dark-content'></StatusBar>
     // </NavigationContainer>
 
-    <RegisterScreen/>
+    <HomeScreen />
   );
 }
 
