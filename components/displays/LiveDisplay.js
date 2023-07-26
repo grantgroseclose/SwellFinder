@@ -6,6 +6,7 @@ import AppText from '../AppText';
 import AppCard from '../AppCard';
 import OutlookCard from '../OutlookCard';
 import CardDisplay from '../CardDisplay';
+import TideCard from '../TideCard';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -29,18 +30,16 @@ const LiveDisplay = () => {
             <CardDisplay
                 header={<AppText passedStyle={styles.headerText}>Tides</AppText>}
                 cards={<>
-                    <OutlookCard 
-                        title='Spot 1'
-                        cardText={<>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
+                    <TideCard 
+                        cardDetails={<>
+                            <AppText passedStyle={styles.cardDetails}>hello</AppText>
                         </>}
                     />
                 </>}
             />
 
             <CardDisplay
+                scrollable={1}
                 header={<AppText passedStyle={styles.headerText}>Hourly</AppText>}
                 subHeader={<>
                     <AppText passedStyle={styles.secondaryHeaderText}>Surf</AppText>
@@ -50,66 +49,66 @@ const LiveDisplay = () => {
                 cards={<>
                     <OutlookCard 
                         title='Spot 1'
-                        cardText={<>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
+                        cardDetails={<>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                         </>}
                     />
                     <OutlookCard 
                         title='Spot 1'
-                        cardText={<>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
+                        cardDetails={<>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                         </>}
                     />
                     <OutlookCard 
                         title='Spot 1'
-                        cardText={<>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
+                        cardDetails={<>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                         </>}
                     />
                     <OutlookCard 
                         title='Spot 1'
-                        cardText={<>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
+                        cardDetails={<>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                         </>}
                     />
                     <OutlookCard 
                         title='Spot 1'
-                        cardText={<>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
+                        cardDetails={<>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                         </>}
                     />
                     <OutlookCard 
                         title='Spot 1'
-                        cardText={<>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
+                        cardDetails={<>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                         </>}
                     />
                     <OutlookCard 
                         title='Spot 1'
-                        cardText={<>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
+                        cardDetails={<>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                         </>}
                     />
                     <OutlookCard 
                         title='Spot 1'
-                        cardText={<>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
+                        cardDetails={<>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                         </>}
                     />
                 </>}
@@ -138,7 +137,7 @@ const styles = StyleSheet.create({
         color: colors.medium,
         fontSize: 14,
     },
-    cardText: {
+    cardDetails: {
         fontFamily: 'Inter-Bold',
         fontSize: 14,
         color: colors.dark,

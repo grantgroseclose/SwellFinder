@@ -55,90 +55,90 @@ const HomeScreen = ({ navigation }) => {
                     cards={<>
                         <OutlookCard 
                             title='Spot 1'
-                            cardText={<>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                            cardDetails={<>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                             </>}
                         />
                         <OutlookCard 
                             title='Spot 1'
-                            cardText={<>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                            cardDetails={<>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                             </>}
                         />
                         <OutlookCard 
                             title='Spot 1'
-                            cardText={<>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                            cardDetails={<>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                             </>}
                         />
                         <OutlookCard 
                             title='Spot 1'
-                            cardText={<>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                            cardDetails={<>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                             </>}
                         />
                         <OutlookCard 
                             title='Spot 1'
-                            cardText={<>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                            cardDetails={<>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                             </>}
                         />
                         <OutlookCard 
                             title='Spot 1'
-                            cardText={<>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                            cardDetails={<>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                             </>}
                         />
                         <OutlookCard 
                             title='Spot 1'
-                            cardText={<>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                            cardDetails={<>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                             </>}
                         />
                         <OutlookCard 
                             title='Spot 1'
-                            cardText={<>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
-                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                            cardDetails={<>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                             </>}
                         />
                     </>}
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
         color: colors.medium,
         fontSize: 14,
     },
-    cardText: {
+    cardDetails: {
         fontFamily: 'Inter-Bold',
         fontSize: 14,
         color: colors.dark,

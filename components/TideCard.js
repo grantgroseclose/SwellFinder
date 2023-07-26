@@ -9,7 +9,7 @@ const screenHeight = Dimensions.get('window').height;
 
 
 
-const WaveHeightCard = ({ width, height, cardDetails, }) => {
+const TideCard = ({ width, height, cardDetails, }) => {
   return (
     <View style={styles.card}>
         {cardDetails}
@@ -23,10 +23,10 @@ const WaveHeightCard = ({ width, height, cardDetails, }) => {
 const styles = StyleSheet.create({
   card: {
     flex: 1,
-    width: '100%',
+    width: screenWidth * 0.9,
     height: screenHeight * 0.15,
     borderRadius: 15,
-    backgroundColor: colors.medium,
+    backgroundColor: colors.light,
     marginVertical: screenHeight * .0125,
     paddingVertical: '5%',
     paddingHorizontal: '0.5%',
@@ -37,4 +37,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default WaveHeightCard;
+export default TideCard;

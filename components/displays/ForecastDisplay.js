@@ -19,34 +19,34 @@ const ForecastDisplay = () => {
             <WaveHeightCard 
                 cardDetails={<ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     <View style={styles.waveDateContainer}>
-                        <AppText passedStyle={styles.cardText}>Sunday</AppText>
+                        <AppText passedStyle={styles.cardDetails}>Sunday</AppText>
                     </View>
                     <View style={styles.waveDateContainer}>
-                        <AppText passedStyle={styles.cardText}>Sunday</AppText>
+                        <AppText passedStyle={styles.cardDetails}>Sunday</AppText>
                     </View>
                     <View style={styles.waveDateContainer}>
-                        <AppText passedStyle={styles.cardText}>Sunday</AppText>
+                        <AppText passedStyle={styles.cardDetails}>Sunday</AppText>
                     </View>
                     <View style={styles.waveDateContainer}>
-                        <AppText passedStyle={styles.cardText}>Sunday</AppText>
+                        <AppText passedStyle={styles.cardDetails}>Sunday</AppText>
                     </View>
                     <View style={styles.waveDateContainer}>
-                        <AppText passedStyle={styles.cardText}>Sunday</AppText>
+                        <AppText passedStyle={styles.cardDetails}>Sunday</AppText>
                     </View>
                     <View style={styles.waveDateContainer}>
-                        <AppText passedStyle={styles.cardText}>Sunday</AppText>
+                        <AppText passedStyle={styles.cardDetails}>Sunday</AppText>
                     </View>
                     <View style={styles.waveDateContainer}>
-                        <AppText passedStyle={styles.cardText}>Sunday</AppText>
+                        <AppText passedStyle={styles.cardDetails}>Sunday</AppText>
                     </View>
                     <View style={styles.waveDateContainer}>
-                        <AppText passedStyle={styles.cardText}>Sunday</AppText>
+                        <AppText passedStyle={styles.cardDetails}>Sunday</AppText>
                     </View>
                     <View style={styles.waveDateContainer}>
-                        <AppText passedStyle={styles.cardText}>Sunday</AppText>
+                        <AppText passedStyle={styles.cardDetails}>Sunday</AppText>
                     </View>
                     <View style={styles.waveDateContainer}>
-                        <AppText passedStyle={styles.cardText}>Sunday</AppText>
+                        <AppText passedStyle={styles.cardDetails}>Sunday</AppText>
                     </View>
                 </ScrollView>}
             />
@@ -61,66 +61,66 @@ const ForecastDisplay = () => {
                 cards={<>
                     <OutlookCard 
                         title='Sunday'
-                        cardText={<>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
+                        cardDetails={<>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                         </>}
                     />
                     <OutlookCard 
                         title='Monday'
-                        cardText={<>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
+                        cardDetails={<>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                         </>}
                     />
                     <OutlookCard 
                         title='Tuesday'
-                        cardText={<>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
+                        cardDetails={<>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                         </>}
                     />
                     <OutlookCard 
                         title='Wednesday'
-                        cardText={<>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
+                        cardDetails={<>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                         </>}
                     />
                     <OutlookCard 
                         title='Thursday'
-                        cardText={<>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
+                        cardDetails={<>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                         </>}
                     />
                     <OutlookCard 
                         title='Spot 1'
-                        cardText={<>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
+                        cardDetails={<>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                         </>}
                     />
                     <OutlookCard 
                         title='Friday'
-                        cardText={<>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
+                        cardDetails={<>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                         </>}
                     />
                     <OutlookCard 
                         title='Saturday'
-                        cardText={<>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
-                            <AppText passedStyle={styles.cardText}>2-3</AppText>
+                        cardDetails={<>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
                         </>}
                     />
                 </>}
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
         color: colors.medium,
         fontSize: 14,
     },
-    cardText: {
+    cardDetails: {
         fontFamily: 'Inter-Bold',
         fontSize: 14,
         color: colors.dark,

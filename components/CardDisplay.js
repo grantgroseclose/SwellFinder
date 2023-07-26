@@ -7,7 +7,7 @@ const screenHeight = Dimensions.get('window').height;
 
 
 
-const CardDisplay = ({ header, subHeader, isHorizontal, cards }) => {
+const CardDisplay = ({ scrollable, header, subHeader, isHorizontal, cards }) => {
   return (
     <View style={{marginVertical: '2.5%'}}>
         <View style={styles.headerTextContainer}>
