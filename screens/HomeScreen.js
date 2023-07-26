@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dimensions, StyleSheet, View, ScrollView, Text, TouchableOpacity } from 'react-native';
-import { Cell, Section, TableView } from 'react-native-tableview-simple';
+
 
 import colors from '../config/colors';
 import Screen from '../components/Screen';
@@ -8,6 +8,7 @@ import AppText from '../components/AppText';
 import AppCard from '../components/AppCard';
 import OutlookCard from '../components/OutlookCard';
 import AppIcon from '../components/AppIcon';
+import CardDisplay from '../components/CardDisplay';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -15,7 +16,7 @@ const screenHeight = Dimensions.get('window').height;
 
 
 
-const HomeScreen = (props) => {
+const HomeScreen = ({ navigation }) => {
     return (
         <Screen passedStyle={{alignItems: 'flex-start'}}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -32,42 +33,116 @@ const HomeScreen = (props) => {
                     </View>
 
                     <View>
-                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.spotScrollView}>
-                            <AppCard title='Spot 1' subTitle='Spot 1 coordinates' image={require('../assets/icon.png')}/>
-                            <AppCard title='Spot 1' subTitle='Spot 1 coordinates' image={require('../assets/icon.png')}/>
-                            <AppCard title='Spot 1' subTitle='Spot 1 coordinates' image={require('../assets/icon.png')}/>
-                            <AppCard title='Spot 1' subTitle='Spot 1 coordinates' image={require('../assets/icon.png')}/>
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{padding: '5%'}}>
+                            <AppCard title='Spot 1' subTitle='Spot 1 coordinates' image={require('../assets/icon.png')} onPress={() => navigation.navigate('SpotScreen')}/>
+                            <AppCard title='Spot 1' subTitle='Spot 1 coordinates' image={require('../assets/icon.png')} onPress={() => navigation.navigate('SpotScreen')}/>
+                            <AppCard title='Spot 1' subTitle='Spot 1 coordinates' image={require('../assets/icon.png')} onPress={() => navigation.navigate('SpotScreen')}/>
+                            <AppCard title='Spot 1' subTitle='Spot 1 coordinates' image={require('../assets/icon.png')} onPress={() => navigation.navigate('SpotScreen')}/>
                         </ScrollView>
                     </View>
                 </View>
 
-                <View>
-                    <View style={styles.headerTextContainer}>
-                        <AppText passedStyle={styles.headerText}>Outlook</AppText>
-                    </View>
-
-                    <View style={styles.datesContainer}>
+                <CardDisplay
+                    header={<AppText passedStyle={styles.headerText}>Outlook</AppText>}
+                    subHeader={<>
                         <AppText passedStyle={styles.secondaryHeaderText}>Sun</AppText>
                         <AppText passedStyle={styles.secondaryHeaderText}>Mon</AppText>
                         <AppText passedStyle={styles.secondaryHeaderText}>Tue</AppText>
                         <AppText passedStyle={styles.secondaryHeaderText}>Wed</AppText>
                         <AppText passedStyle={styles.secondaryHeaderText}>Thu</AppText>
                         <AppText passedStyle={styles.secondaryHeaderText}>Fri</AppText>
-                    </View>
-
-                    <View>
-                        <ScrollView contentContainerStyle={styles.outlookScrollView}>
-                            <OutlookCard title='Spot 1' />
-                            <OutlookCard title='Spot 1' />
-                            <OutlookCard title='Spot 1' />
-                            <OutlookCard title='Spot 1' />
-                            <OutlookCard title='Spot 1' />
-                            <OutlookCard title='Spot 1' />
-                            <OutlookCard title='Spot 1' />
-                            <OutlookCard title='Spot 1' />
-                        </ScrollView>
-                    </View>
-                </View>
+                    </>}
+                    cards={<>
+                        <OutlookCard 
+                            title='Spot 1'
+                            cardText={<>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                            </>}
+                        />
+                        <OutlookCard 
+                            title='Spot 1'
+                            cardText={<>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                            </>}
+                        />
+                        <OutlookCard 
+                            title='Spot 1'
+                            cardText={<>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                            </>}
+                        />
+                        <OutlookCard 
+                            title='Spot 1'
+                            cardText={<>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                            </>}
+                        />
+                        <OutlookCard 
+                            title='Spot 1'
+                            cardText={<>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                            </>}
+                        />
+                        <OutlookCard 
+                            title='Spot 1'
+                            cardText={<>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                            </>}
+                        />
+                        <OutlookCard 
+                            title='Spot 1'
+                            cardText={<>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                            </>}
+                        />
+                        <OutlookCard 
+                            title='Spot 1'
+                            cardText={<>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                                <AppText passedStyle={styles.cardText}>2-3</AppText>
+                            </>}
+                        />
+                    </>}
+                />
             </ScrollView>
         </Screen>
     );
@@ -98,18 +173,11 @@ const styles = StyleSheet.create({
         color: colors.medium,
         fontSize: 14,
     },
-    spotScrollView: {
-        padding: '5%'
-    },
-    datesContainer: {
-        width: '100%',
-        justifyContent: 'space-evenly',
-        flexDirection: 'row',
-        paddingHorizontal: '5%'
-    },
-    outlookScrollView: {
-        alignItems: 'center'
-    },
+    cardText: {
+        fontFamily: 'Inter-Bold',
+        fontSize: 14,
+        color: colors.dark,
+    }
 });
 
 export default HomeScreen;

@@ -1,6 +1,5 @@
 import React from "react";
-import { Dimensions, View, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { Cell } from 'react-native-tableview-simple';
+import { Dimensions, View, StyleSheet } from "react-native";
 
 import AppText from "./AppText";
 import colors from "../config/colors";
@@ -11,20 +10,13 @@ const screenHeight = Dimensions.get('window').height;
 
 
 
-const OutlookCard = ({ title }) => {
+const OutlookCard = ({ width, height, title, cardText, }) => {
   return (
     <View style={styles.card}>
         <View style={styles.titleContainer}>
             <AppText passedStyle={styles.title}>{title}</AppText>
         </View>
-        <View style={styles.detailsContainer}>
-            <AppText passedStyle={styles.waveHeight}>2-3</AppText>
-            <AppText passedStyle={styles.waveHeight}>2-3</AppText>
-            <AppText passedStyle={styles.waveHeight}>2-3</AppText>
-            <AppText passedStyle={styles.waveHeight}>2-3</AppText>
-            <AppText passedStyle={styles.waveHeight}>2-3</AppText>
-            <AppText passedStyle={styles.waveHeight}>2-3</AppText>
-        </View>
+        <View style={styles.detailsContainer}>{cardText}</View>
     </View>
   );
 }
@@ -51,11 +43,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'Inter-Black',
-    fontSize: 14,
-    color: colors.dark,
-  },
-  waveHeight: {
-    fontFamily: 'Inter-Bold',
     fontSize: 14,
     color: colors.dark,
   }

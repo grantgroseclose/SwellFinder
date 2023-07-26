@@ -1,6 +1,5 @@
 import React from "react";
 import { Dimensions, View, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { Cell } from 'react-native-tableview-simple';
 
 import AppText from "./AppText";
 import colors from "../config/colors";
@@ -11,9 +10,9 @@ const screenHeight = Dimensions.get('window').height;
 
 
 
-const AppCard = ({ title, subTitle, image }) => {
+const AppCard = ({ title, subTitle, image, onPress }) => {
   return (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={onPress}>
         <View style={styles.imageContainer}>
             <Image style={styles.image} source={image} />
         </View>

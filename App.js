@@ -16,6 +16,7 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import AccountScreen from './screens/AccountScreen';
 import HomeScreen from './screens/HomeScreen';
+import SpotScreen from './screens/SpotScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -28,6 +29,8 @@ const StackNavigator = () => (
     <Stack.Screen name="Start" component={StartScreen} options={{ headerShown: false }} />
     <Stack.Screen name="Login" component={LoginScreen} />
     <Stack.Screen name="Register" component={RegisterScreen} />
+    <Stack.Screen name="HomeScreen" component={HomeScreen} />
+    <Stack.Screen name="SpotScreen" component={SpotScreen} />
   </Stack.Navigator>
 );
 
@@ -64,7 +67,7 @@ export default function App() {
     //   <StatusBar barStyle='dark-content'></StatusBar>
     // </NavigationContainer>
 
-    <HomeScreen />
+    <SpotScreen />
   );
 }
 
