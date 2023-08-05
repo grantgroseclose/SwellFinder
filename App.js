@@ -5,11 +5,15 @@ import { useFonts } from 'expo-font';
 
 import AuthNavigator from './navigation/AuthNavigator';
 import AppNavigator from './navigation/AppNavigator';
+import AuthContext from "./auth/context";
 
 
 
 
 export default function App() {
+  const [user, setUser] = useState();
+
+
   const [fontsLoaded] = useFonts({
     'Inter-Black': require('./assets/fonts/Inter-Black.ttf'),
     'Inter-Bold': require('./assets/fonts/Inter-Bold.ttf'),
@@ -26,14 +30,20 @@ export default function App() {
     return null;
   }
 
-  return (
-    <NavigationContainer>
-      {/* <AuthNavigator /> */}
-      <AppNavigator />
-      <StatusBar barStyle='dark-content'></StatusBar>
-    </NavigationContainer>
 
-    // <SpotScreen />
+  return (
+    // <NavigationContainer>
+    //   <AuthNavigator />
+    //   {/* <AppNavigator /> */}
+    //   <StatusBar barStyle='dark-content'></StatusBar>
+    // </NavigationContainer>
+
+    
+    <AuthContext.Provider value={{ user, setUser }}>
+      <NavigationContainer>
+        {user ? <AppNavigator /> : <AuthNavigator />}
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 }
 

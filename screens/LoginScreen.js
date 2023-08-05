@@ -1,16 +1,19 @@
-import React from 'react';
-import { Dimensions, StyleSheet, View, Text } from 'react-native';
+import React, { useState } from 'react';
+import { Dimensions, StyleSheet, View, Text, Alert } from 'react-native';
 import * as Yup from 'yup';
 
 import colors from '../config/colors';
 import Screen from '../components/Screen';
 import { AppForm, AppFormField, AppSubmitButton } from '../components/forms';
 
+import authApi from "../api/auth";
+import useAuth from "../auth/useAuth";
+
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 const validationSchema = Yup.object().shape({
-    email: Yup.string().required().email().label('Email'),
+    username: Yup.string().required().min(6).label('Username'),
     password: Yup.string().required().min(6).label('Password')
 })
 
@@ -18,6 +21,19 @@ const validationSchema = Yup.object().shape({
 
 
 const LoginScreen = (props) => {
+    const auth = useAuth();
+    const [loginFailed, setLoginFailed] = useState(false);
+
+    const handleSubmit = async ({ username, password }) => {
+        const result = await authApi.login(username, password);
+        if (!result.ok) {
+            Alert.alert('Error', result.data.error)
+            return setLoginFailed(true);
+        }
+        setLoginFailed(false);
+        auth.logIn(result.data);
+    };
+
     return (
         <Screen passedStyle={{justifyContent: 'flex-start'}}>
             <View style={styles.logoContainer}>
@@ -26,18 +42,16 @@ const LoginScreen = (props) => {
             
             <AppForm 
             style={styles.formContainer}
-            initialValues={{email: '', password: ''}}
-            onSubmit={values => console.log(values)}
+            initialValues={{username: '', password: ''}}
+            onSubmit={handleSubmit}
             validationSchema={validationSchema}
             >
                 <AppFormField
                 autoCapitalize='none'
                 autoCorrect={false}
-                icon='email'
-                keyboardType='email-address'
-                name='email'
-                placeholder='Email'
-                textContentType='emailAddress'
+                icon="account"
+                name="username"
+                placeholder="Username"
                 />
 
                 <AppFormField

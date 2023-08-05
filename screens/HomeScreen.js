@@ -10,6 +10,8 @@ import OutlookCard from '../components/OutlookCard';
 import AppIcon from '../components/AppIcon';
 import CardDisplay from '../components/CardDisplay';
 
+import useAuth from '../auth/useAuth';
+
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
@@ -17,12 +19,14 @@ const screenHeight = Dimensions.get('window').height;
 
 
 const HomeScreen = ({ navigation }) => {
+    const { user, logOut } = useAuth();
+
     return (
         <Screen passedStyle={{alignItems: 'flex-start'}}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.iconContainer}>
                     <AppIcon name='waves' size={70} />
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => logOut()}>
                         <AppIcon name='magnify' backgroundColor='transparent' size={60} />
                     </TouchableOpacity>
                 </View>

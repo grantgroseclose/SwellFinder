@@ -1,10 +1,13 @@
-import React from 'react';
-import { Dimensions, StyleSheet, View, Text } from 'react-native';
+import React, { useState } from 'react';
+import { Dimensions, StyleSheet, View, Text, Alert } from 'react-native';
 import * as Yup from 'yup';
 
 import colors from '../config/colors';
 import Screen from '../components/Screen';
 import { AppForm, AppFormField, AppSubmitButton } from '../components/forms';
+
+import usersApi from "../api/users";
+import useApi from "../hooks/useApi";
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -20,6 +23,27 @@ const validationSchema = Yup.object().shape({
 
 
 const RegisterScreen = (props) => {
+    const registerApi = useApi(usersApi.register);
+    const [error, setError] = useState();
+
+    const handleSubmit = async (userInfo) => {
+        const result = await registerApi.request(userInfo);
+    
+        if (!result.ok) {
+          if (result.data) setError(result.data.error);
+          else {
+            setError("An unexpected error occurred.");
+            Alert.alert('Error', 'An unexpected error occurred.');
+            console.log(result);
+            return;
+          }
+          Alert.alert('Error', result.data.error);
+          return;
+        }
+    
+        Alert.alert('Success!', 'Registration successful.');
+    };
+
     return (
         <Screen passedStyle={{justifyContent: 'flex-start'}}>
             <View style={styles.logoContainer}>
@@ -30,7 +54,7 @@ const RegisterScreen = (props) => {
             <AppForm 
             style={styles.formContainer}
             initialValues={{name: '', username: '', email: '', password: ''}}
-            onSubmit={values => console.log(values)}
+            onSubmit={handleSubmit}
             validationSchema={validationSchema}
             >
                 <View>
