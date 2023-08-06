@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dimensions, StyleSheet, View, ScrollView, Text, TouchableOpacity } from 'react-native';
 
 
@@ -11,6 +11,9 @@ import AppIcon from '../components/AppIcon';
 import CardDisplay from '../components/CardDisplay';
 
 import useAuth from '../auth/useAuth';
+import useApi from '../hooks/useApi';
+import spotsApi from '../api/spots';
+import getSpotApi from '../api/spot';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -20,6 +23,21 @@ const screenHeight = Dimensions.get('window').height;
 
 const HomeScreen = ({ navigation }) => {
     const { user, logOut } = useAuth();
+    const getSpotsApi = useApi(spotsApi.getSpots);
+    const getSpotForecastApi = useApi(getSpotApi.getSpotForecastData);
+    const [ outlookData, setOutlookData ] = useState([]);
+
+    useEffect(() => {
+        setOutlookData([]);
+        
+        getSpotsApi.request().then((response) => {
+            response.data.map((spot) => {
+                getSpotForecastApi.request(spot['location']['latitude'], spot['location']['longitude']).then((response) => {
+                    setOutlookData(currentData => [...currentData, response.data['daily']['wave_height_max']]);
+                });
+            });
+        });
+    }, []);
 
     return (
         <Screen passedStyle={{alignItems: 'flex-start'}}>
@@ -38,10 +56,9 @@ const HomeScreen = ({ navigation }) => {
 
                     <View>
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{padding: '5%'}}>
-                            <AppCard title='Spot 1' subTitle='Spot 1 coordinates' image={require('../assets/icon.png')} onPress={() => navigation.navigate('SpotScreen')}/>
-                            <AppCard title='Spot 1' subTitle='Spot 1 coordinates' image={require('../assets/icon.png')} onPress={() => navigation.navigate('SpotScreen')}/>
-                            <AppCard title='Spot 1' subTitle='Spot 1 coordinates' image={require('../assets/icon.png')} onPress={() => navigation.navigate('SpotScreen')}/>
-                            <AppCard title='Spot 1' subTitle='Spot 1 coordinates' image={require('../assets/icon.png')} onPress={() => navigation.navigate('SpotScreen')}/>
+                            {getSpotsApi.data.map((spot) =>
+                                <AppCard title={spot.name} subTitle={spot.description} image={require('../assets/icon.png')} onPress={() => navigation.navigate('SpotScreen', {spot: spot})}/>
+                            )}
                         </ScrollView>
                     </View>
                 </View>
@@ -57,94 +74,15 @@ const HomeScreen = ({ navigation }) => {
                         <AppText passedStyle={styles.secondaryHeaderText}>Fri</AppText>
                     </>}
                     cards={<>
-                        <OutlookCard 
-                            title='Spot 1'
-                            cardDetails={<>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            </>}
-                        />
-                        <OutlookCard 
-                            title='Spot 1'
-                            cardDetails={<>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            </>}
-                        />
-                        <OutlookCard 
-                            title='Spot 1'
-                            cardDetails={<>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            </>}
-                        />
-                        <OutlookCard 
-                            title='Spot 1'
-                            cardDetails={<>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            </>}
-                        />
-                        <OutlookCard 
-                            title='Spot 1'
-                            cardDetails={<>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            </>}
-                        />
-                        <OutlookCard 
-                            title='Spot 1'
-                            cardDetails={<>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            </>}
-                        />
-                        <OutlookCard 
-                            title='Spot 1'
-                            cardDetails={<>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            </>}
-                        />
-                        <OutlookCard 
-                            title='Spot 1'
-                            cardDetails={<>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                                <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            </>}
-                        />
+                        {getSpotsApi.data &&
+                         getSpotsApi.data.map((spot, index) =>
+                            <OutlookCard title={spot.name} cardDetails={<> 
+                                {outlookData && 
+                                 outlookData[index]?.map((data) =>
+                                    <AppText passedStyle={styles.cardDetails}>{data}</AppText>
+                                )}
+                            </>}/>
+                        )}
                     </>}
                 />
             </ScrollView>

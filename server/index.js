@@ -1,6 +1,8 @@
 const express = require("express");
 const users = require("./routes/users");
 const auth = require("./routes/auth");
+const spots = require("./routes/spots");
+const spot = require("./routes/spot");
 const helmet = require("helmet");
 const compression = require("compression");
 const config = require("config");
@@ -12,6 +14,8 @@ app.use(compression());
 
 app.use("/api/users", users);
 app.use("/api/auth", auth);
+app.use("/api/spot", spot);
+app.use("/api/spots", spots);
 
 const port = config.get("port");
 app.listen(port, function() {

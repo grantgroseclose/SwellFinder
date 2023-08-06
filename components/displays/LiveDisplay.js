@@ -1,5 +1,6 @@
-import React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import React, { useEffect, useContext } from 'react';
+import { Dimensions, StyleSheet, View, Alert } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 
 import colors from '../../config/colors';
 import AppText from '../AppText';
@@ -8,13 +9,44 @@ import OutlookCard from '../OutlookCard';
 import CardDisplay from '../CardDisplay';
 import TideCard from '../TideCard';
 
+import useApi from '../../hooks/useApi';
+import getSpotData from '../../api/spot';
+import { getSpot } from '../../server/store/spots';
+
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
+const times = [
+    '00:00',
+    '01:00',
+    '02:00',
+    '03:00',
+    '04:00',
+    '05:00',
+    '06:00',
+    '07:00',
+    '08:00',
+    '09:00',
+    '10:00',
+    '11:00',
+    '12:00',
+    '13:00',
+    '14:00',
+    '15:00',
+    '16:00',
+    '17:00',
+    '18:00',
+    '19:00',
+    '20:00',
+    '21:00',
+    '22:00',
+    '23:00'
+];
 
 
 
-const LiveDisplay = () => {
+
+const LiveDisplay = ({ spot, spotData}) => {
     return (
         <>
             <View style={{marginBottom: '2.5%'}}>
@@ -23,7 +55,7 @@ const LiveDisplay = () => {
                 </View>
 
                 <View style={{alignItems: 'center'}}>
-                    <AppCard title='Spot 1' subTitle='Spot 1 coordinates' image={require('../../assets/icon.png')}/>
+                    <AppCard title={spot.name} subTitle={spot.description} image={require('../../assets/icon.png')}/>
                 </View>
             </View>
 
@@ -39,78 +71,29 @@ const LiveDisplay = () => {
             />
 
             <CardDisplay
-                scrollable={1}
                 header={<AppText passedStyle={styles.headerText}>Hourly</AppText>}
                 subHeader={<>
                     <AppText passedStyle={styles.secondaryHeaderText}>Surf</AppText>
                     <AppText passedStyle={styles.secondaryHeaderText}>Swell</AppText>
-                    <AppText passedStyle={styles.secondaryHeaderText}>Wind</AppText>
                 </>}
                 cards={<>
-                    <OutlookCard 
-                        title='Spot 1'
+                    {times.map((time, index) => 
+                        <OutlookCard 
+                        title={time}
                         cardDetails={<>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
+                            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                                <AppText passedStyle={styles.cardDetails}>{spotData['wave_height'][index]}</AppText>
+                                <AppText passedStyle={styles.atSymbol}>  @  </AppText>
+                                <AppText passedStyle={styles.cardDetails}>{spotData['wave_period'][index]}s</AppText>
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                                <AppText passedStyle={styles.cardDetails}>{spotData['swell_wave_height'][index]}</AppText>
+                                <AppText passedStyle={styles.atSymbol}>  @  </AppText>
+                                <AppText passedStyle={styles.cardDetails}>{spotData['swell_wave_period'][index]}s</AppText>
+                            </View>
                         </>}
-                    />
-                    <OutlookCard 
-                        title='Spot 1'
-                        cardDetails={<>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                        </>}
-                    />
-                    <OutlookCard 
-                        title='Spot 1'
-                        cardDetails={<>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                        </>}
-                    />
-                    <OutlookCard 
-                        title='Spot 1'
-                        cardDetails={<>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                        </>}
-                    />
-                    <OutlookCard 
-                        title='Spot 1'
-                        cardDetails={<>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                        </>}
-                    />
-                    <OutlookCard 
-                        title='Spot 1'
-                        cardDetails={<>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                        </>}
-                    />
-                    <OutlookCard 
-                        title='Spot 1'
-                        cardDetails={<>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                        </>}
-                    />
-                    <OutlookCard 
-                        title='Spot 1'
-                        cardDetails={<>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                            <AppText passedStyle={styles.cardDetails}>2-3</AppText>
-                        </>}
-                    />
+                        />
+                    )}
                 </>}
             />
         </>
@@ -141,6 +124,11 @@ const styles = StyleSheet.create({
         fontFamily: 'Inter-Bold',
         fontSize: 14,
         color: colors.dark,
+    },
+    atSymbol: {
+        fontFamily: 'Inter-Medium',
+        color: colors.medium,
+        fontSize: 9
     }
 });
 
