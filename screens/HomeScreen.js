@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Dimensions, StyleSheet, View, ScrollView, Text, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Dimensions, StyleSheet, View, ScrollView, Text, TouchableOpacity, RefreshControl } from 'react-native';
 
 
 import colors from '../config/colors';
@@ -15,17 +15,21 @@ import useApi from '../hooks/useApi';
 import spotsApi from '../api/spots';
 import getSpotApi from '../api/spot';
 
+import getWeekDaysFromNow from '../utility/weekGenerator';
+
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
-
-
 
 
 const HomeScreen = ({ navigation }) => {
     const { user, logOut } = useAuth();
     const getSpotsApi = useApi(spotsApi.getSpots);
     const getSpotForecastApi = useApi(getSpotApi.getSpotForecastData);
-    const [ outlookData, setOutlookData ] = useState([]);
+    const [outlookData, setOutlookData] = useState([]);
+
+    const [refreshing, setRefreshing] = useState(false);
+
+    const [weekDays, setWeekDays] = useState(getWeekDaysFromNow);
 
     useEffect(() => {
         setOutlookData([]);
@@ -39,9 +43,27 @@ const HomeScreen = ({ navigation }) => {
         });
     }, []);
 
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        getSpotsApi.request().then((response) => {
+            response.data.map((spot) => {
+                getSpotForecastApi.request(spot['location']['latitude'], spot['location']['longitude']).then((response) => {
+                    setOutlookData(currentData => [...currentData, response.data['daily']['wave_height_max']]);
+                }).then(() => setRefreshing(false));
+            });
+        });
+    }, []);
+
+
     return (
         <Screen passedStyle={{alignItems: 'flex-start'}}>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView 
+            showsVerticalScrollIndicator={false}
+            refreshing={refreshing}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            >
                 <View style={styles.iconContainer}>
                     <AppIcon name='waves' size={70} />
                     <TouchableOpacity onPress={() => logOut()}>
@@ -56,34 +78,41 @@ const HomeScreen = ({ navigation }) => {
 
                     <View>
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{padding: '5%'}}>
-                            {getSpotsApi.data.map((spot) =>
+                        {
+                            getSpotsApi.data &&
+                            getSpotsApi.data.map((spot) =>
                                 <AppCard title={spot.name} subTitle={spot.description} image={require('../assets/icon.png')} onPress={() => navigation.navigate('SpotScreen', {spot: spot})}/>
-                            )}
+                        )}
                         </ScrollView>
                     </View>
                 </View>
 
                 <CardDisplay
                     header={<AppText passedStyle={styles.headerText}>Outlook</AppText>}
-                    subHeader={<>
-                        <AppText passedStyle={styles.secondaryHeaderText}>Sun</AppText>
-                        <AppText passedStyle={styles.secondaryHeaderText}>Mon</AppText>
-                        <AppText passedStyle={styles.secondaryHeaderText}>Tue</AppText>
-                        <AppText passedStyle={styles.secondaryHeaderText}>Wed</AppText>
-                        <AppText passedStyle={styles.secondaryHeaderText}>Thu</AppText>
-                        <AppText passedStyle={styles.secondaryHeaderText}>Fri</AppText>
-                    </>}
-                    cards={<>
-                        {getSpotsApi.data &&
-                         getSpotsApi.data.map((spot, index) =>
-                            <OutlookCard title={spot.name} cardDetails={<> 
-                                {outlookData && 
-                                 outlookData[index]?.map((data) =>
-                                    <AppText passedStyle={styles.cardDetails}>{data}</AppText>
+                    subHeader={
+                        <>
+                        {
+                            weekDays &&
+                            weekDays.map((day) => <AppText passedStyle={styles.secondaryHeaderText}>{day.slice(0, 3)}</AppText>)
+                        }
+                        </>
+                    }
+                    
+                    cards={
+                        <>
+                        {
+                            getSpotsApi.data &&
+                            getSpotsApi.data.map((spot, index) => <OutlookCard title={spot.name} cardDetails={
+                                <>
+                                {
+                                    outlookData && 
+                                    outlookData[index]?.map((data) => <AppText passedStyle={styles.cardDetails}>{data}</AppText>
                                 )}
-                            </>}/>
-                        )}
-                    </>}
+                                </>
+                            }/>)
+                        }
+                        </>
+                    }
                 />
             </ScrollView>
         </Screen>

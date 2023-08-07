@@ -6,6 +6,7 @@ import colors from "../config/colors";
 
 import AccountScreen from "../screens/AccountScreen";
 import SpotNavigator from "./SpotNavigator";
+import SpotMapScreen from "../screens/SpotMapScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -26,6 +27,13 @@ const AppNavigator = () => (
         component={SpotNavigator}
         options={{
           tabBarIcon: ({ size, focused }) => <MaterialCommunityIcons name='home' size={size} color={focused ? colors.blue : colors.light } />
+        }}
+      />
+      <Tab.Screen
+        name='Explore'
+        component={SpotMapScreen}
+        options={{
+          tabBarIcon: ({ size, focused }) => <MaterialCommunityIcons name='map-marker' size={size} color={focused ? colors.blue : colors.light }/>
         }}
       />
       <Tab.Screen

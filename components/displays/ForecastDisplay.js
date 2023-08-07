@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Dimensions, StyleSheet, View, ScrollView } from 'react-native';
 
 import colors from '../../config/colors';
@@ -7,68 +7,68 @@ import OutlookCard from '../OutlookCard';
 import CardDisplay from '../CardDisplay';
 import WaveHeightCard from '../WaveHeightCard';
 
+import getWeekDaysFromNow from '../../utility/weekGenerator';
+
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
-
-const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 
 
 
 const ForecastDisplay = ({ spot, spotData}) => {
+    const [weekDays, setWeekDays] = useState(getWeekDaysFromNow);
+
     return (
         <>
             <WaveHeightCard 
-                cardDetails={<ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    <View style={styles.waveDateContainer}>
-                        <AppText passedStyle={styles.cardDetails}>Sunday</AppText>
-                    </View>
-                    <View style={styles.waveDateContainer}>
-                        <AppText passedStyle={styles.cardDetails}>Monday</AppText>
-                    </View>
-                    <View style={styles.waveDateContainer}>
-                        <AppText passedStyle={styles.cardDetails}>Tuesday</AppText>
-                    </View>
-                    <View style={styles.waveDateContainer}>
-                        <AppText passedStyle={styles.cardDetails}>Wednesday</AppText>
-                    </View>
-                    <View style={styles.waveDateContainer}>
-                        <AppText passedStyle={styles.cardDetails}>Thursday</AppText>
-                    </View>
-                    <View style={styles.waveDateContainer}>
-                        <AppText passedStyle={styles.cardDetails}>Friday</AppText>
-                    </View>
-                    <View style={styles.waveDateContainer}>
-                        <AppText passedStyle={styles.cardDetails}>Saturday</AppText>
-                    </View>
-                </ScrollView>}
+                cardDetails={
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                        <>
+                            {
+                                weekDays &&
+                                weekDays.map((day, index) =>
+                                    <View style={styles.waveDateContainer}>
+                                        <AppText passedStyle={styles.cardDetails}>{day.slice(0, 3)}</AppText>
+                                    </View>
+                                )
+                            }
+                        </>
+                    </ScrollView>
+                }
             />
 
             <CardDisplay
                 header={<AppText passedStyle={styles.headerText}>Forecast</AppText>}
-                subHeader={<>
-                    <AppText passedStyle={styles.secondaryHeaderText}>Surf</AppText>
-                    <AppText passedStyle={styles.secondaryHeaderText}>Swell</AppText>
-                </>}
-                cards={<>
-                        {weekDays.map((day, index) => 
+                subHeader={
+                    <>
+                        <AppText passedStyle={styles.secondaryHeaderText}>Surf</AppText>
+                        <AppText passedStyle={styles.secondaryHeaderText}>Swell</AppText>
+                    </>
+                }
+                cards={
+                    <>
+                        {
+                            weekDays &&
+                            weekDays.map((day, index) => 
                             <OutlookCard 
-                            title={day}
-                            cardDetails={<>
-                                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                                    <AppText passedStyle={styles.cardDetails}>{spotData['wave_height'][index]}</AppText>
-                                    <AppText passedStyle={styles.atSymbol}>  @  </AppText>
-                                    <AppText passedStyle={styles.cardDetails}>{spotData['wave_period'][index]}s</AppText>
-                                </View>
-                                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                                    <AppText passedStyle={styles.cardDetails}>{spotData['swell_wave_height'][index]}</AppText>
-                                    <AppText passedStyle={styles.atSymbol}>  @  </AppText>
-                                    <AppText passedStyle={styles.cardDetails}>{spotData['swell_wave_period'][index]}s</AppText>
-                                </View>
-                            </>}
+                                title={day}
+                                cardDetails={
+                                <>
+                                    <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                                        <AppText passedStyle={styles.cardDetails}>{spotData['wave_height'][index]}</AppText>
+                                        <AppText passedStyle={styles.atSymbol}>  @  </AppText>
+                                        <AppText passedStyle={styles.cardDetails}>{spotData['wave_period'][index]}s</AppText>
+                                    </View>
+                                    <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                                        <AppText passedStyle={styles.cardDetails}>{spotData['swell_wave_height'][index]}</AppText>
+                                        <AppText passedStyle={styles.atSymbol}>  @  </AppText>
+                                        <AppText passedStyle={styles.cardDetails}>{spotData['swell_wave_period'][index]}s</AppText>
+                                    </View>
+                                </>}
                             />
                         )}
-                </>}
+                    </>
+                }
             />
         </>
     );

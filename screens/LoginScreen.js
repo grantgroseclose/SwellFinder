@@ -15,7 +15,7 @@ const screenHeight = Dimensions.get('window').height;
 const validationSchema = Yup.object().shape({
     username: Yup.string().required().min(6).label('Username'),
     password: Yup.string().required().min(6).label('Password')
-})
+});
 
 
 

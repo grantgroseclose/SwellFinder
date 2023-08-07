@@ -7,14 +7,13 @@ const validateWith = require("../middleware/validation");
 const auth = require("../middleware/auth");
 const delay = require("../middleware/delay");
 const config = require("config");
+const c = require("config");
 
 const schema = Joi.object({
-    name: Joi.string().required(),
-    description: Joi.string().allow(""),
-    location: Joi.object({
-        latitude: Joi.number().required(),
-        longitude: Joi.number().required(),
-    }).required(),
+    name: Joi.string().min(1).required(),
+    description: Joi.string().min(1).required(),
+    latitude: Joi.string().min(5).required(),
+    longitude: Joi.string().min(5).required()
 });
 
 router.get("/", auth, (req, res) => {
@@ -24,15 +23,16 @@ router.get("/", auth, (req, res) => {
   res.send(spots);
 });
 
-router.post("/", validateWith(schema), async (req, res) => {
+router.post("/", [validateWith(schema), auth], async (req, res) => {
     const spot = {
+      userId: req.user.userId,
       name: req.body.name,
       description: req.body.description,
-      location: req.body.location
+      location: {
+        'latitude': parseFloat(parseFloat(req.body.latitude).toFixed(2)),
+        'longitude': parseFloat(parseFloat(req.body.longitude).toFixed(2))
+      }
     };
-    
-    if (req.body.location) spot.location = JSON.parse(req.body.location);
-    if (req.user) spot.userId = req.user.userId;
 
     spotStore.addSpot(spot);
 
