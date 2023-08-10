@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Dimensions, StyleSheet, View, ScrollView, Text, TouchableOpacity, RefreshControl } from 'react-native';
+import { Dimensions, StyleSheet, View, ScrollView, Text, TouchableOpacity, RefreshControl, Modal, ActivityIndicator } from 'react-native';
 
 
 import colors from '../config/colors';
@@ -9,6 +9,7 @@ import AppCard from '../components/AppCard';
 import OutlookCard from '../components/OutlookCard';
 import AppIcon from '../components/AppIcon';
 import CardDisplay from '../components/CardDisplay';
+import SearchModal from '../components/SearchModal';
 
 import useAuth from '../auth/useAuth';
 import useApi from '../hooks/useApi';
@@ -16,6 +17,7 @@ import spotsApi from '../api/spots';
 import getSpotApi from '../api/spot';
 
 import getWeekDaysFromNow from '../utility/weekGenerator';
+import AppButton from '../components/AppButton';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -24,39 +26,57 @@ const screenHeight = Dimensions.get('window').height;
 const HomeScreen = ({ navigation }) => {
     const { user, logOut } = useAuth();
     const getSpotsApi = useApi(spotsApi.getSpots);
-    const getSpotForecastApi = useApi(getSpotApi.getSpotForecastData);
     const [outlookData, setOutlookData] = useState([]);
-
     const [refreshing, setRefreshing] = useState(false);
-
     const [weekDays, setWeekDays] = useState(getWeekDaysFromNow);
+    const [modalVisible, setModalVisible] = useState(false);
 
+    const handleModal = () => {
+        setModalVisible(!modalVisible);
+    }
+
+
+    let updatedOutlookData = [];
     useEffect(() => {
-        setOutlookData([]);
-        
-        getSpotsApi.request().then((response) => {
-            response.data.map((spot) => {
-                getSpotForecastApi.request(spot['location']['latitude'], spot['location']['longitude']).then((response) => {
-                    setOutlookData(currentData => [...currentData, response.data['daily']['wave_height_max']]);
-                });
+        const getOutlookData = async () => {
+            const params = await getSpotsApi.request();
+            const forecast = await getSpotApi.getAllSpotsForecastData(params['data']);
+            forecast.forEach((spot) => {
+                updatedOutlookData.push(spot['wave_height_max']);
             });
-        });
+
+            setOutlookData(updatedOutlookData);
+        }
+
+        getOutlookData();
     }, []);
+
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
-        getSpotsApi.request().then((response) => {
-            response.data.map((spot) => {
-                getSpotForecastApi.request(spot['location']['latitude'], spot['location']['longitude']).then((response) => {
-                    setOutlookData(currentData => [...currentData, response.data['daily']['wave_height_max']]);
-                }).then(() => setRefreshing(false));
+        updatedOutlookData = [];
+        
+        const refreshOutlookData = async () => {
+            const params = await getSpotsApi.request();
+            const forecast = await getSpotApi.getAllSpotsForecastData(params['data']);
+            forecast.forEach((spot) => {
+                updatedOutlookData.push(spot['wave_height_max']);
             });
-        });
+
+            setRefreshing(false);
+        }
+
+        refreshOutlookData();
+        setOutlookData(updatedOutlookData);
     }, []);
 
 
     return (
         <Screen passedStyle={{alignItems: 'flex-start'}}>
+            {modalVisible &&
+                <SearchModal toggleModal={handleModal} spots={getSpotsApi['data']} />
+            }
+
             <ScrollView 
             showsVerticalScrollIndicator={false}
             refreshing={refreshing}
@@ -66,7 +86,7 @@ const HomeScreen = ({ navigation }) => {
             >
                 <View style={styles.iconContainer}>
                     <AppIcon name='waves' size={70} />
-                    <TouchableOpacity onPress={() => logOut()}>
+                    <TouchableOpacity onPress={handleModal}>
                         <AppIcon name='magnify' backgroundColor='transparent' size={60} />
                     </TouchableOpacity>
                 </View>
@@ -103,6 +123,10 @@ const HomeScreen = ({ navigation }) => {
                         {
                             getSpotsApi.data &&
                             getSpotsApi.data.map((spot, index) => <OutlookCard title={spot.name} cardDetails={
+                                outlookData?.length === 0 && outlookData?.length === 0 &&
+                                <ActivityIndicator size="small" color={colors.blue} />
+                                ||
+                                outlookData?.length !== 0 && outlookData?.length !== 0 &&
                                 <>
                                 {
                                     outlookData && 
@@ -147,7 +171,7 @@ const styles = StyleSheet.create({
     cardDetails: {
         fontFamily: 'Inter-Bold',
         fontSize: 14,
-        color: colors.dark,
+        color: colors.light,
     }
 });
 

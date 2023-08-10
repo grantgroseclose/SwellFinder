@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, TextInput, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -9,7 +9,7 @@ import colors from "../config/colors";
 
 const AppTextInput = ({ icon, ...otherProps }) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, otherProps['containerStyle']]}>
       {icon && (
         <MaterialCommunityIcons
           name={icon}
@@ -19,7 +19,10 @@ const AppTextInput = ({ icon, ...otherProps }) => {
         />
       )}
       <TextInput
+        onChangeText={otherProps['onChangeText']}
+        placeholder={otherProps['placeholder']}
         placeholderTextColor={colors.medium}
+        clearButtonMode='while-editing'
         style={styles.text}
         {...otherProps}
       />

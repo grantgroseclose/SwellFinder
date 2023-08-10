@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     width: screenWidth * 0.9,
     height: screenHeight * 0.1,
     borderRadius: 15,
-    backgroundColor: colors.light,
+    backgroundColor: colors.dark,
     marginVertical: screenHeight * .0125,
     padding: '2.5%'
   },
@@ -42,9 +42,9 @@ const styles = StyleSheet.create({
     flex: 4,
   },
   title: {
-    fontFamily: 'Inter-Black',
+    fontFamily: 'Inter-Bold',
     fontSize: 14,
-    color: colors.dark,
+    color: colors.medium,
   }
 });
 

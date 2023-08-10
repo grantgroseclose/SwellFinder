@@ -9,10 +9,10 @@ const screenHeight = Dimensions.get('window').height;
 
 
 
-const TideCard = ({ width, height, cardDetails, }) => {
+const TideCard = ({ width, height, children }) => {
   return (
     <View style={styles.card}>
-        {cardDetails}
+        {children}
     </View>
   );
 }
@@ -23,16 +23,14 @@ const TideCard = ({ width, height, cardDetails, }) => {
 const styles = StyleSheet.create({
   card: {
     flex: 1,
-    width: screenWidth * 0.9,
-    height: screenHeight * 0.15,
+    width: screenWidth,
+    height: screenHeight * 0.25,
     borderRadius: 15,
-    backgroundColor: colors.light,
+    backgroundColor: colors.dark,
     marginVertical: screenHeight * .0125,
-    paddingVertical: '5%',
-    paddingHorizontal: '0.5%',
+    paddingVertical: '2.5%',
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    marginVertical: '5%'
+    justifyContent: 'space-evenly'
   }
 });
 

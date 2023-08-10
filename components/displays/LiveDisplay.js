@@ -1,6 +1,8 @@
-import React, { useEffect, useContext } from 'react';
-import { Dimensions, StyleSheet, View, Alert } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { Dimensions, StyleSheet, View, Alert, ActivityIndicator } from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { LineChart } from 'react-native-chart-kit';
 
 import colors from '../../config/colors';
 import AppText from '../AppText';
@@ -46,7 +48,7 @@ const times = [
 
 
 
-const LiveDisplay = ({ spot, spotData}) => {
+const LiveDisplay = ({ spot, spotData, tideLabels, tideData }) => {
     return (
         <>
             <View style={{marginBottom: '2.5%'}}>
@@ -61,37 +63,102 @@ const LiveDisplay = ({ spot, spotData}) => {
 
             <CardDisplay
                 header={<AppText passedStyle={styles.headerText}>Tides</AppText>}
-                cards={<>
-                    <TideCard 
-                        cardDetails={<>
-                            <AppText passedStyle={styles.cardDetails}>hello</AppText>
-                        </>}
+                cards={
+                    tideLabels?.length === 0 && tideData?.length === 0 &&
+                    <TideCard>
+                        <ActivityIndicator size="large" color={colors.blue} />
+                    </TideCard>
+                    
+                    || tideLabels?.length !== 0 && tideData?.length !== 0 &&
+                    <LineChart
+                        data={{
+                            labels: tideLabels,
+                            datasets: [
+                                {
+                                    data: tideData
+                                }
+                            ]
+                        }}
+                        width={screenWidth}
+                        height={screenHeight * 0.25}
+                        withDots={false}
+                        withInnerLines={false}
+                        withOuterLines={false}
+                        chartConfig={{
+                            backgroundColor: colors.dark,
+                            backgroundGradientFrom: colors.dark,
+                            backgroundGradientTo: colors.dark,
+                            backgroundGradientFromOpacity: 1,
+                            backgroundGradientToOpacity: 1,
+                            fillShadowGradientFrom: colors.blue,
+                            fillShadowGradientTo: colors.dark,
+                            color: (opacity = 1) => colors.blue,
+                            labelColor: (opacity = 1) => colors.light,
+                            propsForLabels: {
+                                fontWeight: 'bold'
+                            }
+                        }}
+                        bezier
+                        style={{
+                            // paddingRight: 0,
+                            borderRadius: 15,
+                            paddingVertical: '2.5%'
+                        }}
+                        segments={2}
+                        xLabelsOffset={0}
+                        // withHorizontalLabels={false}
+                        withVerticalLabels={false}
+                        onDataPointClick={({ index, value, dataset, x, y }) => {
+                            Alert.alert(index, value);
+                        }}
                     />
-                </>}
+                }
             />
 
             <CardDisplay
                 header={<AppText passedStyle={styles.headerText}>Hourly</AppText>}
                 subHeader={<>
-                    <AppText passedStyle={styles.secondaryHeaderText}>Surf</AppText>
-                    <AppText passedStyle={styles.secondaryHeaderText}>Swell</AppText>
+                    <View style={{flex: 2, alignItems: 'center'}}>
+                        <AppText passedStyle={styles.secondaryHeaderText}>Surf</AppText>
+                    </View>
+                    <View style={{flex: 3, alignItems: 'center'}}>
+                        <AppText passedStyle={styles.secondaryHeaderText}>Swell</AppText>
+                    </View>
                 </>}
-                cards={<>
+                cards={
+                <>
                     {times.map((time, index) => 
                         <OutlookCard 
                         title={time}
-                        cardDetails={<>
-                            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                        cardDetails={
+                            spotData?.length === 0 && spotData?.length === 0 &&
+                                <ActivityIndicator size="large" color={colors.blue} />
+                            ||
+                            spotData?.length !== 0 && spotData?.length !== 0 &&
+                        <>
+                            <View style={{flex: 2, flexDirection: 'row', justifyContent: 'center'}}>
                                 <AppText passedStyle={styles.cardDetails}>{spotData['wave_height'][index]}</AppText>
                                 <AppText passedStyle={styles.atSymbol}>  @  </AppText>
-                                <AppText passedStyle={styles.cardDetails}>{spotData['wave_period'][index]}s</AppText>
+                                <AppText passedStyle={styles.cardDetails}>{parseFloat(parseFloat(spotData['wave_period'][index]).toFixed(1))}s</AppText>
                             </View>
-                            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                            <View style={{flex: 2, flexDirection: 'row', justifyContent: 'center'}}>
                                 <AppText passedStyle={styles.cardDetails}>{spotData['swell_wave_height'][index]}</AppText>
                                 <AppText passedStyle={styles.atSymbol}>  @  </AppText>
-                                <AppText passedStyle={styles.cardDetails}>{spotData['swell_wave_period'][index]}s</AppText>
+                                <AppText passedStyle={styles.cardDetails}>{parseFloat(parseFloat(spotData['swell_wave_period'][index]).toFixed(1))}s</AppText>
                             </View>
-                        </>}
+                            <View style={{flex: 1}}>
+                                <View style={{justifyContent: 'center', position: 'absolute', right: '50%'}}>
+                                    <View style={{
+                                    transform:[{rotateZ: spotData['swell_wave_direction'][index] + 'deg'}],
+                                    justifyContent: 'center'
+                                    }}>
+                                        <MaterialCommunityIcons name='arrow-down-bold' color={colors.blue} size={25}/>
+                                    </View>
+                                    <AppText passedStyle={styles.degrees}>{spotData['swell_wave_direction'][index]}{'\u00b0'}</AppText>
+                                </View>
+                            </View>
+                        </>
+                        }
                         />
                     )}
                 </>}
@@ -116,19 +183,24 @@ const styles = StyleSheet.create({
         fontSize: 24,
     },
     secondaryHeaderText: {
-        fontFamily: 'Inter-Medium',
-        color: colors.medium,
+        fontFamily: 'Inter-Black',
+        color: colors.blue,
         fontSize: 14,
     },
     cardDetails: {
         fontFamily: 'Inter-Bold',
         fontSize: 14,
-        color: colors.dark,
+        color: colors.light,
     },
     atSymbol: {
         fontFamily: 'Inter-Medium',
         color: colors.medium,
         fontSize: 9
+    },
+    degrees: {
+        fontFamily: 'Inter-Medium',
+        color: colors.medium,
+        fontSize: 12
     }
 });
 

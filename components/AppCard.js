@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     width: screenWidth * 0.85,
     height: screenHeight * 0.35,
     borderRadius: 15,
-    backgroundColor: colors.light,
+    backgroundColor: colors.dark,
     marginLeft: screenWidth * .025,
     marginRight: screenWidth * .025
   },
@@ -52,11 +52,11 @@ const styles = StyleSheet.create({
   },
   subTitle: {
     fontFamily: 'Inter-Light',
-    color: colors.dark
+    color: colors.light
   },
   title: {
     fontFamily: 'Inter-Bold',
-    color: colors.dark,
+    color: colors.blue,
   },
 });
 

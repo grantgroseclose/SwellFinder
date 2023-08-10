@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dimensions, StyleSheet, View, ScrollView } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { LineChart } from 'react-native-chart-kit';
 
 import colors from '../../config/colors';
 import AppText from '../AppText';
@@ -18,57 +20,105 @@ const screenHeight = Dimensions.get('window').height;
 const ForecastDisplay = ({ spot, spotData}) => {
     const [weekDays, setWeekDays] = useState(getWeekDaysFromNow);
 
+    console.log(spotData['swell_wave_direction'])
     return (
         <>
-            <WaveHeightCard 
-                cardDetails={
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                        <>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                <LineChart
+                    data={{
+                        labels: weekDays.map((day) => day.slice(0,3)),
+                        datasets: [
                             {
-                                weekDays &&
-                                weekDays.map((day, index) =>
-                                    <View style={styles.waveDateContainer}>
-                                        <AppText passedStyle={styles.cardDetails}>{day.slice(0, 3)}</AppText>
-                                    </View>
-                                )
+                                data: spotData['wave_height']
                             }
-                        </>
-                    </ScrollView>
-                }
-            />
+                        ]
+                    }}
+                    width={(spotData['wave_height'].length * screenWidth) / 5}
+                    height={screenHeight * 0.2}
+                    withDots={false}
+                    withInnerLines={false}
+                    withOuterLines={false}
+                    chartConfig={{
+                        backgroundColor: colors.dark,
+                        backgroundGradientFrom: colors.dark,
+                        backgroundGradientTo: colors.dark,
+                        backgroundGradientFromOpacity: 1,
+                        backgroundGradientToOpacity: 1,
+                        fillShadowGradientFrom: colors.blue,
+                        fillShadowGradientTo: colors.dark,
+                        color: (opacity = 1) => colors.blue,
+                        labelColor: (opacity = 1) => colors.light,
+                        propsForLabels: {
+                            fontWeight: 'bold'
+                        }
+                    }}
+                    bezier
+                    style={{
+                        borderRadius: 15,
+                        marginTop: screenHeight * 0.025,
+                        marginBottom: screenHeight * 0.025
+                    }}
+                    segments={2}
+                    xLabelsOffset={0}
+                    fromZero={true}
+                    withHorizontalLabels={false}
+                    // withVerticalLabels={false}
+                    onDataPointClick={({ index, value, dataset, x, y }) => {
+                        Alert.alert(index, value);
+                    }}
+                />
+            </ScrollView>
 
             <CardDisplay
                 header={<AppText passedStyle={styles.headerText}>Forecast</AppText>}
                 subHeader={
                     <>
-                        <AppText passedStyle={styles.secondaryHeaderText}>Surf</AppText>
-                        <AppText passedStyle={styles.secondaryHeaderText}>Swell</AppText>
+                        <View style={{flex: 2, alignItems: 'center'}}>
+                            <AppText passedStyle={styles.secondaryHeaderText}>Surf</AppText>
+                        </View>
+                        <View style={{flex: 3, alignItems: 'center'}}>
+                            <AppText passedStyle={styles.secondaryHeaderText}>Swell</AppText>
+                        </View>
                     </>
                 }
                 cards={
-                    <>
-                        {
-                            weekDays &&
-                            weekDays.map((day, index) => 
-                            <OutlookCard 
-                                title={day}
-                                cardDetails={
-                                <>
-                                    <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                                        <AppText passedStyle={styles.cardDetails}>{spotData['wave_height'][index]}</AppText>
-                                        <AppText passedStyle={styles.atSymbol}>  @  </AppText>
-                                        <AppText passedStyle={styles.cardDetails}>{spotData['wave_period'][index]}s</AppText>
+                <>
+                    {
+                        weekDays &&
+                        weekDays.map((day, index) => 
+                        <OutlookCard 
+                            title={day}
+                            cardDetails={
+                                spotData?.length === 0 && spotData?.length === 0 &&
+                                    <ActivityIndicator size="large" color={colors.blue} />
+                                ||
+                                spotData?.length !== 0 && spotData?.length !== 0 &&
+                            <>
+                                <View style={{flex: 2, flexDirection: 'row', justifyContent: 'center'}}>
+                                    <AppText passedStyle={styles.cardDetails}>{spotData['wave_height'][index]}</AppText>
+                                    <AppText passedStyle={styles.atSymbol}>  @  </AppText>
+                                    <AppText passedStyle={styles.cardDetails}>{parseFloat(parseFloat(spotData['wave_period'][index]).toFixed(1))}s</AppText>
+                                </View>
+                                <View style={{flex: 2, flexDirection: 'row', justifyContent: 'center'}}>
+                                    <AppText passedStyle={styles.cardDetails}>{spotData['swell_wave_height'][index]}</AppText>
+                                    <AppText passedStyle={styles.atSymbol}>  @  </AppText>
+                                    <AppText passedStyle={styles.cardDetails}>{parseFloat(parseFloat(spotData['swell_wave_period'][index]).toFixed(1))}s</AppText>
+                                </View>
+                                <View style={{flex: 1}}>
+                                    <View style={{justifyContent: 'center', position: 'absolute', right: '50%',}}>
+                                        <View style={{
+                                        transform:[{rotateZ: spotData['swell_wave_direction'][index] + 'deg'}],
+                                        justifyContent: 'center'
+                                        }}>
+                                            <MaterialCommunityIcons name='arrow-down-bold' color={colors.blue} size={25}/>
+                                        </View>
+                                        <AppText passedStyle={styles.degrees}>{spotData['swell_wave_direction'][index]}{'\u00b0'}</AppText>
                                     </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                                        <AppText passedStyle={styles.cardDetails}>{spotData['swell_wave_height'][index]}</AppText>
-                                        <AppText passedStyle={styles.atSymbol}>  @  </AppText>
-                                        <AppText passedStyle={styles.cardDetails}>{spotData['swell_wave_period'][index]}s</AppText>
-                                    </View>
-                                </>}
-                            />
-                        )}
-                    </>
-                }
+                                </View>
+                            </>}
+                        />
+                    )}
+                </>}
             />
         </>
     );
@@ -90,14 +140,14 @@ const styles = StyleSheet.create({
         fontSize: 24,
     },
     secondaryHeaderText: {
-        fontFamily: 'Inter-Medium',
-        color: colors.medium,
+        fontFamily: 'Inter-Black',
+        color: colors.blue,
         fontSize: 14,
     },
     cardDetails: {
         fontFamily: 'Inter-Bold',
         fontSize: 14,
-        color: colors.dark,
+        color: colors.light,
     },
     waveDateContainer: {
         borderRadius: 15,
@@ -111,6 +161,11 @@ const styles = StyleSheet.create({
         fontFamily: 'Inter-Medium',
         color: colors.medium,
         fontSize: 9
+    },
+    degrees: {
+        fontFamily: 'Inter-Medium',
+        color: colors.medium,
+        fontSize: 12
     }
 });
 

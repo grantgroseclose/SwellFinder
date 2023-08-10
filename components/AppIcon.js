@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '../config/colors';
 
 
-const AppIcon = ({ name, size = 40, backgroundColor = colors.blue, iconColor = colors.light }) => {
+const AppIcon = ({ name, size = 40, backgroundColor = colors.blue, iconColor = colors.light, align }) => {
     return (
         <View style={{
             width: size,
@@ -13,7 +13,8 @@ const AppIcon = ({ name, size = 40, backgroundColor = colors.blue, iconColor = c
             borderRadius: size / 2,
             backgroundColor,
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
+            alignSelf: align
         }}>
             <MaterialCommunityIcons name={name} color={iconColor} size={size * 0.5}/>
         </View>
