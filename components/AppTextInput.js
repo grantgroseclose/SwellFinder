@@ -21,7 +21,8 @@ const AppTextInput = ({ icon, ...otherProps }) => {
       <TextInput
         onChangeText={otherProps['onChangeText']}
         placeholder={otherProps['placeholder']}
-        placeholderTextColor={colors.medium}
+        editable={otherProps['editable']}
+        placeholderTextColor={otherProps['placeholderTextColor'] ? otherProps['placeholderTextColor'] : colors.medium}
         clearButtonMode='while-editing'
         style={styles.text}
         {...otherProps}

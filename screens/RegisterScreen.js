@@ -34,7 +34,6 @@ const RegisterScreen = (props) => {
           else {
             setError("An unexpected error occurred.");
             Alert.alert('Error', 'An unexpected error occurred.');
-            console.log(result);
             return;
           }
           Alert.alert('Error', result.data.error);

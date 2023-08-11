@@ -21,10 +21,16 @@ const addUser = (user) => {
   users.push(user);
 };
 
+const updateUserPassword = ({ username, password }) => {
+  let user = getUserByUsername(username);
+  user.password = password;
+}
+
 module.exports = {
   getUsers,
   getUserByEmail,
   getUserById,
   getUserByUsername,
   addUser,
+  updateUserPassword
 };

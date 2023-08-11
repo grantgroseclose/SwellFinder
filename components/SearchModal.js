@@ -53,8 +53,8 @@ const SearchModal = ({toggleModal, spots}) => {
 
                     <ScrollView showsVerticalScrollIndicator={false} style={{width: '100%'}}>
                         {modalList &&
-                        modalList.map((spot) => 
-                            <ModalListItem spot={spot} onPress={toggleIt} />
+                        modalList.map((spot, index) => 
+                            <ModalListItem key={index} spot={spot} onPress={toggleIt} />
                         )}
                     </ScrollView>
                 </View>

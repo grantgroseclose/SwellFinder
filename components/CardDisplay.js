@@ -18,10 +18,8 @@ const CardDisplay = ({ scrollable, header, subHeader, isHorizontal, cards }) => 
             {subHeader}
         </View>
 
-        <View>
-            <ScrollView horizontal={isHorizontal} contentContainerStyle={{alignItems: 'center'}}>
-                {cards}
-            </ScrollView>
+        <View style={{alignItems: 'center'}}>
+            {cards}
         </View>
     </View>
   );

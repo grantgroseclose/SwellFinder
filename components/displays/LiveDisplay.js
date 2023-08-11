@@ -64,12 +64,6 @@ const LiveDisplay = ({ spot, spotData, tideLabels, tideData }) => {
             <CardDisplay
                 header={<AppText passedStyle={styles.headerText}>Tides</AppText>}
                 cards={
-                    tideLabels?.length === 0 && tideData?.length === 0 &&
-                    <TideCard>
-                        <ActivityIndicator size="large" color={colors.blue} />
-                    </TideCard>
-                    
-                    || tideLabels?.length !== 0 && tideData?.length !== 0 &&
                     <LineChart
                         data={{
                             labels: tideLabels,
@@ -107,7 +101,7 @@ const LiveDisplay = ({ spot, spotData, tideLabels, tideData }) => {
                         segments={2}
                         xLabelsOffset={0}
                         // withHorizontalLabels={false}
-                        withVerticalLabels={false}
+                        // withVerticalLabels={false}
                         onDataPointClick={({ index, value, dataset, x, y }) => {
                             Alert.alert(index, value);
                         }}
@@ -129,12 +123,9 @@ const LiveDisplay = ({ spot, spotData, tideLabels, tideData }) => {
                 <>
                     {times.map((time, index) => 
                         <OutlookCard 
+                        key={index}
                         title={time}
                         cardDetails={
-                            spotData?.length === 0 && spotData?.length === 0 &&
-                                <ActivityIndicator size="large" color={colors.blue} />
-                            ||
-                            spotData?.length !== 0 && spotData?.length !== 0 &&
                         <>
                             <View style={{flex: 2, flexDirection: 'row', justifyContent: 'center'}}>
                                 <AppText passedStyle={styles.cardDetails}>{spotData['wave_height'][index]}</AppText>

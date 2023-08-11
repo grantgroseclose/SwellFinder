@@ -20,7 +20,6 @@ const screenHeight = Dimensions.get('window').height;
 const ForecastDisplay = ({ spot, spotData}) => {
     const [weekDays, setWeekDays] = useState(getWeekDaysFromNow);
 
-    console.log(spotData['swell_wave_direction'])
     return (
         <>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -34,7 +33,7 @@ const ForecastDisplay = ({ spot, spotData}) => {
                         ]
                     }}
                     width={(spotData['wave_height'].length * screenWidth) / 5}
-                    height={screenHeight * 0.2}
+                    height={screenHeight * 0.25}
                     withDots={false}
                     withInnerLines={false}
                     withOuterLines={false}
@@ -87,12 +86,9 @@ const ForecastDisplay = ({ spot, spotData}) => {
                         weekDays &&
                         weekDays.map((day, index) => 
                         <OutlookCard 
+                            key={index}
                             title={day}
                             cardDetails={
-                                spotData?.length === 0 && spotData?.length === 0 &&
-                                    <ActivityIndicator size="large" color={colors.blue} />
-                                ||
-                                spotData?.length !== 0 && spotData?.length !== 0 &&
                             <>
                                 <View style={{flex: 2, flexDirection: 'row', justifyContent: 'center'}}>
                                     <AppText passedStyle={styles.cardDetails}>{spotData['wave_height'][index]}</AppText>

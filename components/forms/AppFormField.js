@@ -15,6 +15,8 @@ const AppFormField = ({ name, ...otherProps }) => {
             <AppTextInput
             onBlur={() => setFieldTouched(name)}
             onChangeText={handleChange(name)}
+            editable={otherProps['editable']}
+            placeholderTextColor={otherProps['placeholderTextColor']}
             {...otherProps}
             />
             <ErrorMessage error={errors[name]} visible={touched[name]} />

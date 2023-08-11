@@ -4,6 +4,7 @@ const express = require("express");
 require('dotenv').config({ path: require('find-config')('.env') });
 
 const users = require("./routes/users");
+const user = require("./routes/user");
 const auth = require("./routes/auth");
 const spots = require("./routes/spots");
 const spot = require("./routes/spot");
@@ -18,6 +19,7 @@ app.use(helmet());
 app.use(compression());
 
 app.use("/api/users", users);
+app.use("/api/user", user);
 app.use("/api/auth", auth);
 app.use("/api/spot", spot);
 app.use("/api/spots", spots);

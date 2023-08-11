@@ -18,7 +18,7 @@ router.post("/", validateWith(schema), (req, res) => {
   }
 
   const token = jwt.sign(
-    { userId: user.id, username: user.username },
+    { name: user.name, userId: user.id, username: user.username, email: user.email },
     "jwtPrivateKey"
   );
 

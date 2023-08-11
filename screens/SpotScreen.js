@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext } from 'react';
-import { Dimensions, StyleSheet, ScrollView } from 'react-native';
+import { Dimensions, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import moment from 'moment';
 
@@ -20,6 +20,8 @@ const screenHeight = Dimensions.get('window').height;
 
 
 const SpotScreen = (props) => {
+    const [loading, setLoading] = useState(true);
+
     const [spotLiveData, setSpotLiveData] = useState({
         'wave_height': [],
         'wave_period': [],
@@ -50,7 +52,6 @@ const SpotScreen = (props) => {
     const getSpotTideApi = useApi(getTideApi.getSpotTideData);
 
     const timestamp = moment().utc().startOf('day').unix();
-    console.log(timestamp);
 
     let newTideLabels = [];
     let newTideData = [];
@@ -84,54 +85,12 @@ const SpotScreen = (props) => {
             
             setTideLabels(newTideLabels);
             setTideData(newTideData);
-            console.log(newTideData);
+
+            setLoading(false);
         }
 
         getData();
     }, []);
-
-    // useEffect(() => {
-    //     getSpotLiveApi.request(latitude, longitude).then((response) => {
-    //         setSpotLiveData({
-    //             'wave_height': response.data['hourly']['wave_height'].slice(0, 24),
-    //             'wave_period': response.data['hourly']['wave_period'].slice(0, 24),
-    //             'swell_wave_height': response.data['hourly']['swell_wave_height'].slice(0, 24),
-    //             'swell_wave_period': response.data['hourly']['swell_wave_period'].slice(0, 24),
-    //             'swell_wave_direction': response.data['hourly']['swell_wave_direction'].slice(0, 24)
-    //         });
-    //     });
-
-    //     getSpotForecastApi.request(latitude, longitude).then((response) => {
-    //         setSpotForecastData({
-    //             'wave_height': response.data['daily']['wave_height_max'],
-    //             'wave_period': response.data['daily']['wave_period_max'],
-    //             'swell_wave_height': response.data['daily']['swell_wave_height_max'],
-    //             'swell_wave_period': response.data['daily']['swell_wave_period_max'],
-    //             'swell_wave_direction': response.data['daily']['swell_wave_direction_dominant']
-    //         });
-    //     });
-
-    //     // TODO: fix tide data not coming through on backend        
-    //     // TODO: append 00:00, 06:00, 12:00, 18:00, 24:00 then format with extremes
-    //     getSpotTideApi.request(timestamp, latitude, longitude).then((response) => {
-    //         // console.log(response.data);
-
-    //         response.data['extremes'].map((extreme) => {
-    //             // setTideLabels(currentLabels => [...currentLabels, extreme['datetime'].slice(11, 16)]);
-    //             // setTideData(currentData => [...currentData, parseFloat(extreme['height'].toFixed(2))]);
-
-    //             newTideLabels.push(extreme['datetime'].slice(11, 16));
-    //             newTideData.push(parseFloat(extreme['height'].toFixed(2)));
-    //         });
-
-    //     }).then(() => {
-    //         console.log(newTideLabels);
-    //         console.log(newTideData);
-    //         setTideLabels(newTideLabels);
-    //         setTideData(newTideData);
-    //     });
-    // }, []);
-    
 
 
     const toggleForecast = (val) => { setForecastMode(val); }
@@ -150,7 +109,10 @@ const SpotScreen = (props) => {
                     selectionColor={colors.light}
                 />
 
+                { loading ? <ActivityIndicator size="large" color={colors.blue} />
+                :
                 <>{toggleDisplay}</>
+                }
             </ScrollView>
         </Screen>
     );

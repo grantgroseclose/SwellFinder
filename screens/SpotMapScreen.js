@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
     },
     spotCallout: {
-        width: screenWidth * .6,
+        width: screenWidth * .8,
         borderRadius: 15,
         padding: '5%',
         backgroundColor: colors.primary

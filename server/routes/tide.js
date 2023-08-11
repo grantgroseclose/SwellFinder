@@ -17,20 +17,6 @@ const mareaClient = apisauce.create({
 
 
 
-// router.get("/", auth, (req, res) => {
-//     const { timestamp, latitude, longitude } = req.query;
-
-//     mareaClient.get(tideEndpoint,
-//         {
-//             timestamp: timestamp,
-//             latitude: longitude,
-//             longitude: latitude
-//         }
-//     ).then(response => {
-//         return res.send(response['data']); 
-//     });
-// });
-
 router.get("/", auth, (req, res) => {
     const { timestamp, latitude, longitude } = req.query;
 
@@ -41,8 +27,7 @@ router.get("/", auth, (req, res) => {
             longitude: latitude
         }
     ).then(response => {
-        console.log(response['data']['extremes']);
-        res.send(response['data']);
+        res.send(response['data']); 
     });
 });
 

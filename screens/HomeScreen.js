@@ -24,7 +24,7 @@ const screenHeight = Dimensions.get('window').height;
 
 
 const HomeScreen = ({ navigation }) => {
-    const { user, logOut } = useAuth();
+    const [loading, setLoading] = useState(true);
     const getSpotsApi = useApi(spotsApi.getSpots);
     const [outlookData, setOutlookData] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
@@ -46,6 +46,7 @@ const HomeScreen = ({ navigation }) => {
             });
 
             setOutlookData(updatedOutlookData);
+            setLoading(false);
         }
 
         getOutlookData();
@@ -81,7 +82,7 @@ const HomeScreen = ({ navigation }) => {
             showsVerticalScrollIndicator={false}
             refreshing={refreshing}
             refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.blue}/>
             }
             >
                 <View style={styles.iconContainer}>
@@ -97,13 +98,14 @@ const HomeScreen = ({ navigation }) => {
                     </View>
 
                     <View>
+                    { loading ? <ActivityIndicator size='large' color={colors.blue} /> :
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{padding: '5%'}}>
                         {
-                            getSpotsApi.data &&
-                            getSpotsApi.data.map((spot) =>
-                                <AppCard title={spot.name} subTitle={spot.description} image={require('../assets/icon.png')} onPress={() => navigation.navigate('SpotScreen', {spot: spot})}/>
+                            getSpotsApi.data.map((spot, index) =>
+                                <AppCard key={index} title={spot.name} subTitle={spot.description} image={require('../assets/icon.png')} onPress={() => navigation.navigate('SpotScreen', {spot: spot})}/>
                         )}
                         </ScrollView>
+                    }
                     </View>
                 </View>
 
@@ -113,27 +115,27 @@ const HomeScreen = ({ navigation }) => {
                         <>
                         {
                             weekDays &&
-                            weekDays.map((day) => <AppText passedStyle={styles.secondaryHeaderText}>{day.slice(0, 3)}</AppText>)
+                            weekDays.map((day, index) => <AppText key={index} passedStyle={styles.secondaryHeaderText}>{day.slice(0, 3)}</AppText>)
                         }
                         </>
                     }
                     
                     cards={
+                        loading ? <ActivityIndicator size='large' color={colors.blue} /> :
                         <>
                         {
-                            getSpotsApi.data &&
-                            getSpotsApi.data.map((spot, index) => <OutlookCard title={spot.name} cardDetails={
-                                outlookData?.length === 0 && outlookData?.length === 0 &&
-                                <ActivityIndicator size="small" color={colors.blue} />
-                                ||
-                                outlookData?.length !== 0 && outlookData?.length !== 0 &&
-                                <>
-                                {
-                                    outlookData && 
-                                    outlookData[index]?.map((data) => <AppText passedStyle={styles.cardDetails}>{data}</AppText>
-                                )}
-                                </>
-                            }/>)
+                            getSpotsApi.data.map((spot, index) => 
+                                <OutlookCard 
+                                key={index}
+                                title={spot.name} 
+                                cardDetails={
+                                    <>
+                                    {
+                                        outlookData[index]?.map((data, index) => <AppText key={index} passedStyle={styles.cardDetails}>{data}</AppText>
+                                    )}
+                                    </>
+                                }/>
+                            )
                         }
                         </>
                     }

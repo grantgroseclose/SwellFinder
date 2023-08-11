@@ -1,10 +1,15 @@
-import React from 'react';
-import { Dimensions, StyleSheet, View, Text } from 'react-native';
+import React, { useState } from 'react';
+import { Dimensions, StyleSheet, View, Text, Alert } from 'react-native';
 import * as Yup from 'yup';
 
 import colors from '../config/colors';
 import Screen from '../components/Screen';
 import { AppForm, AppFormField, AppSubmitButton } from '../components/forms';
+import AppButton from '../components/AppButton';
+import authApi from "../api/auth";
+import useAuth from '../auth/useAuth';
+import useApi from '../hooks/useApi';
+import usersApi from '../api/users';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -20,17 +25,40 @@ const validationSchema = Yup.object().shape({
 
 
 const AccountScreen = (props) => {
+    const { user, logOut } = useAuth();
+    
+    const updatePasswordApi = useApi(usersApi.update);
+    const [error, setError] = useState();
+
+    const handleSubmit = async (userInfo) => {
+        const result = await updatePasswordApi.request(userInfo);
+    
+        if (!result.ok) {
+          if (result.data) setError(result.data.error);
+          else {
+            setError("An unexpected error occurred.");
+            Alert.alert('Error', 'An unexpected error occurred.');
+            return;
+          }
+          Alert.alert('Error', result.data.error);
+          return;
+        }
+        
+        Alert.alert('Success!', 'Your password has now been updated.');
+    };
+    
+
     return (
         <Screen passedStyle={{justifyContent: 'flex-start'}}>
-            <View style={styles.logoContainer}>
-                <Text style={styles.logoText}>Account</Text>
+            <View style={styles.headerContainer}>
+                <Text style={styles.headerText}>Account</Text>
             </View>
 
             
             <AppForm 
             style={styles.formContainer}
-            initialValues={{name: '', username: '', email: '', password: ''}}
-            onSubmit={values => console.log(values)}
+            initialValues={{name: user.name, username: user.username, email: user.email, password: ''}}
+            onSubmit={handleSubmit}
             validationSchema={validationSchema}
             >
                 <View>
@@ -39,7 +67,9 @@ const AccountScreen = (props) => {
                     autoCorrect={false}
                     icon='contacts'
                     name='name'
-                    placeholder='Name'
+                    placeholder={user.name}
+                    placeholderTextColor={colors.black}
+                    editable={false}
                     />
 
                     <AppFormField
@@ -47,7 +77,9 @@ const AccountScreen = (props) => {
                     autoCorrect={false}
                     icon='account'
                     name='username'
-                    placeholder='Username'
+                    placeholder={user.username}
+                    placeholderTextColor={colors.black}
+                    editable={false}
                     />
 
                     <AppFormField
@@ -56,7 +88,9 @@ const AccountScreen = (props) => {
                     icon='email'
                     keyboardType='email-address'
                     name='email'
-                    placeholder='Email'
+                    placeholder={user.email}
+                    placeholderTextColor={colors.black}
+                    editable={false}
                     textContentType='emailAddress'
                     />
 
@@ -69,10 +103,12 @@ const AccountScreen = (props) => {
                     secureTextEntry
                     textContentType='password'
                     />
-                </View>
 
-                <AppSubmitButton title='Update' />
+                    <AppSubmitButton title='Update' />
+                </View>
             </AppForm>
+
+            <AppButton title='Logout' onPress={() => logOut()}/>
         </Screen>
     );
 }
@@ -81,24 +117,25 @@ const AccountScreen = (props) => {
 
 
 const styles = StyleSheet.create({
-    logoContainer: {
+    headerContainer: {
         flex: 1,
         padding: 10,
         width: '100%',
         alignItems: 'flex-start',
         justifyContent: 'center',
     },
-    logoText: {
+    headerText: {
         fontFamily: 'Inter-Black',
         fontSize: screenHeight * .05,
         fontWeight: 'bold',
         color: colors.white
     },
     formContainer: {
+        flex: 2,
         padding: 10,
         flex: 4,
         width: '100%',
-        justifyContent: 'space-between'
+        // justifyContent: 'space-between'
     }
 });
 
