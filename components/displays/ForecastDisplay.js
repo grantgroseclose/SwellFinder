@@ -7,7 +7,7 @@ import colors from '../../config/colors';
 import AppText from '../AppText';
 import OutlookCard from '../OutlookCard';
 import CardDisplay from '../CardDisplay';
-import WaveHeightCard from '../WaveHeightCard';
+import AppSwitch from '../AppSwitch';
 
 import getWeekDaysFromNow from '../../utility/weekGenerator';
 
@@ -19,6 +19,36 @@ const screenHeight = Dimensions.get('window').height;
 
 const ForecastDisplay = ({ spot, spotData}) => {
     const [weekDays, setWeekDays] = useState(getWeekDaysFromNow);
+    const [measure, setMeasure] = useState(2);
+    const [adjustedData, setAdjustedData] = useState(spotData);
+    const [heightInFeet, setHeightInFeet] = useState(spotData);
+
+    const toggleMeasure = (val) => {
+        if (measure === val) return;
+
+        setMeasure(val);
+
+        if (val === 1) {
+            setAdjustedData(heightInFeet);
+        }
+        else if (val === 2) {
+            setAdjustedData(spotData);
+        }
+    }
+
+    useEffect(() => {
+        let heights = {
+            'wave_height': [],
+            'swell_wave_height': []
+        };
+
+        spotData['wave_height'].map((height, index) => {
+            heights['wave_height'].push(parseFloat((height * 3).toFixed(2)));
+            heights['swell_wave_height'].push(parseFloat((spotData['swell_wave_height'][index] * 3).toFixed(2)));
+        });
+
+        setHeightInFeet(heights);
+    }, []);
 
     return (
         <>
@@ -69,7 +99,20 @@ const ForecastDisplay = ({ spot, spotData}) => {
             </ScrollView>
 
             <CardDisplay
-                header={<AppText passedStyle={styles.headerText}>Forecast</AppText>}
+                header={
+                <>
+                    <AppText passedStyle={styles.headerText}>Forecast</AppText>
+                    <AppSwitch 
+                    containerStyle={styles.toggleContainerStyle}
+                    selectionMode={2}
+                    option1={'(ft)'}
+                    option2={'(m)'}
+                    onSelectSwitch={toggleMeasure}
+                    selectionColor={colors.light}
+                    />
+                    {/* <AppText passedStyle={styles.headerText}>Forecast</AppText> */}
+                </>
+                }
                 subHeader={
                     <>
                         <View style={{flex: 2, alignItems: 'center'}}>
@@ -91,12 +134,12 @@ const ForecastDisplay = ({ spot, spotData}) => {
                             cardDetails={
                             <>
                                 <View style={{flex: 2, flexDirection: 'row', justifyContent: 'center'}}>
-                                    <AppText passedStyle={styles.cardDetails}>{spotData['wave_height'][index]}</AppText>
+                                    <AppText passedStyle={styles.cardDetails}>{adjustedData['wave_height'][index]}</AppText>
                                     <AppText passedStyle={styles.atSymbol}>  @  </AppText>
                                     <AppText passedStyle={styles.cardDetails}>{parseFloat(parseFloat(spotData['wave_period'][index]).toFixed(1))}s</AppText>
                                 </View>
                                 <View style={{flex: 2, flexDirection: 'row', justifyContent: 'center'}}>
-                                    <AppText passedStyle={styles.cardDetails}>{spotData['swell_wave_height'][index]}</AppText>
+                                    <AppText passedStyle={styles.cardDetails}>{adjustedData['swell_wave_height'][index]}</AppText>
                                     <AppText passedStyle={styles.atSymbol}>  @  </AppText>
                                     <AppText passedStyle={styles.cardDetails}>{parseFloat(parseFloat(spotData['swell_wave_period'][index]).toFixed(1))}s</AppText>
                                 </View>
@@ -162,6 +205,12 @@ const styles = StyleSheet.create({
         fontFamily: 'Inter-Medium',
         color: colors.medium,
         fontSize: 12
+    },
+
+    toggleContainerStyle: {
+        flexDirection: 'row',
+        padding: '2.5%',
+        justifyContent: 'flex-end',
     }
 });
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, View, StyleSheet, ScrollView } from "react-native";
+import { Dimensions, View, StyleSheet } from "react-native";
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -7,7 +7,7 @@ const screenHeight = Dimensions.get('window').height;
 
 
 
-const CardDisplay = ({ scrollable, header, subHeader, isHorizontal, cards }) => {
+const CardDisplay = ({ header, subHeader, cards }) => {
   return (
     <View style={{marginVertical: '2.5%'}}>
         <View style={styles.headerTextContainer}>
@@ -31,9 +31,9 @@ const CardDisplay = ({ scrollable, header, subHeader, isHorizontal, cards }) => 
 const styles = StyleSheet.create({
     headerTextContainer: {
         padding: '5%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        alignSelf: 'flex-start'
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end'
     },
     datesContainer: {
         width: '100%',

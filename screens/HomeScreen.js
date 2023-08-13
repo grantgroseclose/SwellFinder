@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Dimensions, StyleSheet, View, ScrollView, Text, TouchableOpacity, RefreshControl, Modal, ActivityIndicator } from 'react-native';
+import { Dimensions, StyleSheet, View, ScrollView, TouchableOpacity, RefreshControl, ActivityIndicator } from 'react-native';
 
 
 import colors from '../config/colors';
@@ -11,13 +11,11 @@ import AppIcon from '../components/AppIcon';
 import CardDisplay from '../components/CardDisplay';
 import SearchModal from '../components/SearchModal';
 
-import useAuth from '../auth/useAuth';
 import useApi from '../hooks/useApi';
 import spotsApi from '../api/spots';
 import getSpotApi from '../api/spot';
 
 import getWeekDaysFromNow from '../utility/weekGenerator';
-import AppButton from '../components/AppButton';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -102,7 +100,7 @@ const HomeScreen = ({ navigation }) => {
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{padding: '5%'}}>
                         {
                             getSpotsApi.data.map((spot, index) =>
-                                <AppCard key={index} title={spot.name} subTitle={spot.description} image={require('../assets/icon.png')} onPress={() => navigation.navigate('SpotScreen', {spot: spot})}/>
+                                <AppCard key={index} title={spot.name} subTitle={spot.description} image={require('../assets/smyrna.png')} onPress={() => navigation.navigate('SpotScreen', {spot: spot})}/>
                         )}
                         </ScrollView>
                     }

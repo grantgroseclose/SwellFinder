@@ -64,9 +64,9 @@ const AppSwitch = ({
 const styles = StyleSheet.create({
     switchContainer: {
         // height: screenHeight * .06,
-        // width: screenHeight * .24,
+        width: screenWidth * .45,
         height: 44,
-        width: 215,
+        // width: 215,
         backgroundColor: colors.blue,
         borderRadius: 25,
         flexDirection: 'row',

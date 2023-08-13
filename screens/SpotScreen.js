@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dimensions, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import moment from 'moment';
@@ -62,9 +62,19 @@ const SpotScreen = (props) => {
             const forecastParams = await getSpotForecastApi.request(latitude, longitude);
     
             const tideData = await getSpotTideApi.request(timestamp, latitude, longitude);
-            tideData['data']['extremes'].forEach((extreme) => {
+            tideData['data']['extremes'].forEach((extreme, index) => {
+                if (index === 0) {
+                    newTideLabels.push('00:00');
+                    newTideData.push(parseFloat(tideData['data']['heights'][index]['height'].toFixed(2)));
+                }
+
                 newTideLabels.push(extreme['datetime'].slice(11, 16));
                 newTideData.push(parseFloat(extreme['height'].toFixed(2)));
+                
+                if (index === (tideData['data']['extremes'].length - 1)) {
+                    newTideLabels.push('23:00');
+                    newTideData.push(parseFloat(tideData['data']['heights'][23]['height'].toFixed(2)));
+                }
             });
             
             setSpotLiveData({
