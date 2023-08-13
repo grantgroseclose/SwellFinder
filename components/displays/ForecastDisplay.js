@@ -59,7 +59,15 @@ const ForecastDisplay = ({ spot, spotData}) => {
                         datasets: [
                             {
                                 data: spotData['wave_height']
-                            }
+                            },
+                            {
+                                data: [Math.min(...spotData['wave_height']) - ((Math.max(...spotData['wave_height']) - Math.min(...spotData['wave_height'])) / 2)],
+                                withDots: false,
+                            },
+                            {
+                                data: [Math.max(...spotData['wave_height']) + ((Math.max(...spotData['wave_height']) - Math.min(...spotData['wave_height'])) / 3)],
+                                withDots: false,
+                            },
                         ]
                     }}
                     width={(spotData['wave_height'].length * screenWidth) / 5}
@@ -89,8 +97,8 @@ const ForecastDisplay = ({ spot, spotData}) => {
                     }}
                     segments={2}
                     xLabelsOffset={0}
-                    fromZero={true}
-                    withHorizontalLabels={false}
+                    fromZero={false}
+                    withHorizontalLabels={true}
                     // withVerticalLabels={false}
                     onDataPointClick={({ index, value, dataset, x, y }) => {
                         Alert.alert(index, value);
