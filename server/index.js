@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 const express = require("express");
 
-require('dotenv').config({ path: require('find-config')('.env') });
+dotenv.config({ path: require('find-config')('.env') });
 
 const users = require("./routes/users");
 const user = require("./routes/user");
@@ -18,6 +18,7 @@ app.use(express.json());
 app.use(helmet());
 app.use(compression());
 
+app.use(express.static("public"));
 app.use("/api/users", users);
 app.use("/api/user", user);
 app.use("/api/auth", auth);

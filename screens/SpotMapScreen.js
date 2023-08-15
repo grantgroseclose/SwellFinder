@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Dimensions, StyleSheet, Alert } from 'react-native';
+import { Dimensions, StyleSheet, Alert, View } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import * as Yup from 'yup';
 
 import colors from '../config/colors';
 import Screen from '../components/Screen';
 import { AppForm, AppFormField, AppSubmitButton } from '../components/forms';
-
+import FormImagePicker from '../components/forms/FormImagePicker';
 
 import spotsApi from '../api/spots';
 
@@ -20,22 +20,29 @@ const validationSchema = Yup.object().shape({
     name: Yup.string().required().min(1).label('Name'),
     description: Yup.string().required().min(1).label('Description'),
     latitude: Yup.string().required().min(5).label('Latitude'),
-    longitude: Yup.string().required().min(5).label('Longitude')
+    longitude: Yup.string().required().min(5).label('Longitude'),
+    image: Yup.string().required()
 });
+
+
+
 
 const SpotMapScreen = () => {
     const [marker, setMarker] = useState(null);
     const [setSpot, setSpotFailed] = useState(false);
 
-    const handleSubmit = async ({name, description, latitude, longitude}) => {
-        const result = await spotsApi.addSpot(name, description, latitude, longitude);
+    const handleSubmit = async (spot) => {
+        const result = await spotsApi.addSpot(spot);
+        
         if (!result.ok) {
             Alert.alert('Error', result.data.error);
             return setSpotFailed(true);
         }
+
         Alert.alert('Success!', 'Spot added!');
         setSpotFailed(false);
     };
+
 
     return (
         <Screen>
@@ -58,42 +65,49 @@ const SpotMapScreen = () => {
                                 name: '',
                                 description: '', 
                                 latitude: parseFloat(marker.latitude).toFixed(2), 
-                                longitude: parseFloat(marker.longitude).toFixed(2)
+                                longitude: parseFloat(marker.longitude).toFixed(2),
+                                image: ''
                             }}
                             onSubmit={handleSubmit}
                             validationSchema={validationSchema}
                             >
-                                <AppFormField
-                                autoCapitalize='none'
-                                autoCorrect={false}
-                                icon="pencil"
-                                name="name"
-                                placeholder="Name"
-                                />
+                                <View>
+                                    <AppFormField
+                                    autoCapitalize='none'
+                                    autoCorrect={false}
+                                    icon="pencil"
+                                    name="name"
+                                    placeholder="Name"
+                                    />
 
-                                <AppFormField
-                                autoCapitalize='none'
-                                autoCorrect={false}
-                                icon='chat-question'
-                                name='description'
-                                placeholder='Description'
-                                />
+                                    <AppFormField
+                                    autoCapitalize='none'
+                                    autoCorrect={false}
+                                    icon='chat-question'
+                                    name='description'
+                                    placeholder='Description'
+                                    />
 
-                                <AppFormField
-                                autoCapitalize='none'
-                                autoCorrect={false}
-                                icon="latitude"
-                                name="latitude"
-                                placeholder={parseFloat(marker.latitude).toFixed(2)}
-                                />
+                                    <AppFormField
+                                    autoCapitalize='none'
+                                    autoCorrect={false}
+                                    icon="latitude"
+                                    name="latitude"
+                                    placeholder={parseFloat(marker.latitude).toFixed(2)}
+                                    placeholderTextColor={colors.medium}
+                                    />
 
-                                <AppFormField
-                                autoCapitalize='none'
-                                autoCorrect={false}
-                                icon='longitude'
-                                name='longitude'
-                                placeholder={parseFloat(marker.longitude).toFixed(2)}
-                                />
+                                    <AppFormField
+                                    autoCapitalize='none'
+                                    autoCorrect={false}
+                                    icon='longitude'
+                                    name='longitude'
+                                    placeholder={parseFloat(marker.longitude).toFixed(2)}
+                                    placeholderTextColor={colors.medium}
+                                    />
+
+                                    <FormImagePicker name='image' />
+                                </View>
 
                                 <AppSubmitButton title='Add Spot' />
                             </AppForm>
@@ -117,9 +131,11 @@ const styles = StyleSheet.create({
     },
     spotCallout: {
         width: screenWidth * .8,
+        height: screenHeight * .6,
         borderRadius: 15,
         padding: '5%',
-        backgroundColor: colors.primary
+        backgroundColor: colors.primary,
+        justifyContent: 'space-between'
     }
 });
 

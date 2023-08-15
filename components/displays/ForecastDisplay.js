@@ -99,7 +99,6 @@ const ForecastDisplay = ({ spot, spotData}) => {
                     xLabelsOffset={0}
                     fromZero={false}
                     withHorizontalLabels={true}
-                    // withVerticalLabels={false}
                     onDataPointClick={({ index, value, dataset, x, y }) => {
                         Alert.alert(index, value);
                     }}
@@ -118,7 +117,6 @@ const ForecastDisplay = ({ spot, spotData}) => {
                     onSelectSwitch={toggleMeasure}
                     selectionColor={colors.light}
                     />
-                    {/* <AppText passedStyle={styles.headerText}>Forecast</AppText> */}
                 </>
                 }
                 subHeader={

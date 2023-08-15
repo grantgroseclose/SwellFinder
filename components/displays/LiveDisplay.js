@@ -83,7 +83,7 @@ const LiveDisplay = ({ spot, spotData, tideLabels, tideData }) => {
                 </View>
 
                 <View style={{alignItems: 'center'}}>
-                    <AppCard title={spot.name} subTitle={spot.description} image={require('../../assets/smyrna.png')}/>
+                    <AppCard title={spot.name} subTitle={spot.description} image={spot.image}/>
                 </View>
             </View>
 
@@ -120,14 +120,11 @@ const LiveDisplay = ({ spot, spotData, tideLabels, tideData }) => {
                         }}
                         bezier
                         style={{
-                            // paddingRight: 0,
                             borderRadius: 15,
                             paddingVertical: '2.5%'
                         }}
                         segments={2}
                         xLabelsOffset={0}
-                        // withHorizontalLabels={false}
-                        // withVerticalLabels={false}
                         onDataPointClick={({ index, value, dataset, x, y }) => {
                             Alert.alert(index, value);
                         }}
@@ -147,7 +144,6 @@ const LiveDisplay = ({ spot, spotData, tideLabels, tideData }) => {
                     onSelectSwitch={toggleMeasure}
                     selectionColor={colors.light}
                     />
-                    {/* <AppText passedStyle={styles.headerText}>Hourly</AppText> */}
                 </>
                 }
                 subHeader={<>

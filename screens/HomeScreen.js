@@ -100,7 +100,7 @@ const HomeScreen = ({ navigation }) => {
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{padding: '5%'}}>
                         {
                             getSpotsApi.data.map((spot, index) =>
-                                <AppCard key={index} title={spot.name} subTitle={spot.description} image={require('../assets/smyrna.png')} onPress={() => navigation.navigate('SpotScreen', {spot: spot})}/>
+                                <AppCard key={index} title={spot.name} subTitle={spot.description} image={spot.image} onPress={() => navigation.navigate('SpotScreen', {spot: spot})}/>
                         )}
                         </ScrollView>
                     }

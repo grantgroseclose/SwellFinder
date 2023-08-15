@@ -1,5 +1,7 @@
 import React from "react";
-import { Dimensions, View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { Dimensions, View, StyleSheet, TouchableOpacity, Image } from "react-native";
+// import { Image } from "react-native-expo-image-cache";
+import { create } from 'apisauce';
 
 import AppText from "./AppText";
 import colors from "../config/colors";
@@ -11,10 +13,19 @@ const screenHeight = Dimensions.get('window').height;
 
 
 const AppCard = ({ title, subTitle, image, onPress }) => {
+  
+
   return (
     <TouchableOpacity style={styles.card} onPress={onPress}>
         <View style={styles.imageContainer}>
-            <Image style={styles.image} source={image} />
+            <Image style={{
+                    width: '100%',
+                    height: '100%',
+                    borderTopLeftRadius: 15,
+                    borderTopRightRadius: 15,
+                  }} 
+                  source={{ uri: image }} 
+            />
         </View>
         <View style={styles.detailsContainer}>
             <AppText passedStyle={styles.title}>{title}</AppText>
@@ -43,12 +54,6 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flex: 7
-  },
-  image: {
-    width: '100%',
-    maxHeight: '100%',
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
   },
   subTitle: {
     fontFamily: 'Inter-Light',

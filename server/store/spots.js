@@ -8,6 +8,7 @@ const spots = [
             latitude: 29.06,
             longitude: -80.91,
         },
+        image: 'http://10.0.0.86:9000/assets/4164bac352f61f219603e73fc9897a1e.jpg'
     },
     {
         id: 2,
@@ -17,17 +18,19 @@ const spots = [
         location: {
             latitude: 30.28,
             longitude: -81.39,
-        }
+        },
+        image: 'http://10.0.0.86:9000/assets/c7cf92f86d7e88faeca5a4c1b517ede2.jpg'
     },
     {
         id: 3,
         userId: 1,
-        name: 'St. Aug Pier',
-        description: 'Pier',
+        name: 'Ponce Inlet',
+        description: 'Inlet',
         location: {
-            latitude: 29.90,
-            longitude: -81.31,
-        }
+            latitude: 29.08,
+            longitude: -80.92,
+        },
+        image: 'http://10.0.0.86:9000/assets/1eced50c89ea76f9a86f0a48fddaa122.jpg'
     },
 ];
 

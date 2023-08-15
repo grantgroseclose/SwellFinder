@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { StatusBar, Dimensions, StyleSheet } from 'react-native';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 
 import AuthNavigator from './navigation/AuthNavigator';
@@ -32,13 +31,6 @@ export default function App() {
 
 
   return (
-    // <NavigationContainer>
-    //   <AuthNavigator />
-    //   {/* <AppNavigator /> */}
-    //   <StatusBar barStyle='dark-content'></StatusBar>
-    // </NavigationContainer>
-
-    
     <AuthContext.Provider value={{ user, setUser }}>
       <NavigationContainer>
         {user ? <AppNavigator /> : <AuthNavigator />}
@@ -50,6 +42,3 @@ export default function App() {
 
 
 
-const styles = StyleSheet.create({
-  
-});
