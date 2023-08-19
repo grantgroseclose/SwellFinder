@@ -2,27 +2,42 @@ const express = require("express");
 const router = express.Router();
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
-const usersStore = require("../store/users");
 const validateWith = require("../middleware/validation");
+const bcrypt = require("bcrypt");
 
-const schema = Joi.object({
-  username: Joi.string().required().min(6),
-  password: Joi.string().required().min(6)
+const UserModel = require('../models/Users');
+
+
+
+
+const validationSchema = Joi.object({
+  username: Joi.string().required().min(6).max(18),
+  password: Joi.string().required().min(6).max(18)
 });
 
-router.post("/", validateWith(schema), (req, res) => {
-  const { username, password } = req.body;
-  const user = usersStore.getUserByUsername(username);
-  if (!user || user.password !== password) {
-    return res.status(400).send({ error: "Invalid username or password." });
-  }
+router.post("/", validateWith(validationSchema), async (req, res) => {
+    const user = await UserModel.findOne({ username: req.body.username });
+    if (!user) {
+      return res.status(400).send({ error: "User does not exist." });
+    }
 
-  const token = jwt.sign(
-    { name: user.name, userId: user.id, username: user.username, email: user.email },
-    "jwtPrivateKey"
-  );
+    const comp = await bcrypt.compare(req.body.password, user.password);
+    if (!comp) {
+      return res.status(400).send({ error: "Invalid username or password." });
+    }
 
-  res.send(token);
+    const token = jwt.sign(
+      {
+        name: user.name,
+        userId: user._id,
+        username: user.username, 
+        email: user.email
+      },
+      "jwtPrivateKey",
+      { expiresIn: "24h" }
+    );
+
+    res.send(token);
 });
 
 module.exports = router;

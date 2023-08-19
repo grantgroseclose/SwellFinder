@@ -3,6 +3,10 @@ const express = require("express");
 
 dotenv.config({ path: require('find-config')('.env') });
 
+const connectDB = require('./connectDB');
+const SpotModel = require('./models/Spots');
+const UserModel = require('./models/Users');
+
 const users = require("./routes/users");
 const user = require("./routes/user");
 const auth = require("./routes/auth");
@@ -13,6 +17,8 @@ const helmet = require("helmet");
 const compression = require("compression");
 const config = require("config");
 const app = express();
+
+connectDB();
 
 app.use(express.json());
 app.use(helmet());
