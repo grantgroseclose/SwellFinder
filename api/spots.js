@@ -1,6 +1,7 @@
 import client from "./client";
 
 const endpoint = "/spots";
+const deleteEndpoint = "/spots/delete";
 
 const getSpots = () => client.get(endpoint);
 
@@ -24,7 +25,14 @@ const addSpot = ({ name, description, latitude, longitude, image }) => {
     });
 }
 
+const deleteSpot = ({ _id }) => {
+    return client.delete(deleteEndpoint, {
+        id: _id
+    });
+}
+
 export default {
   getSpots,
-  addSpot
+  addSpot,
+  deleteSpot
 };

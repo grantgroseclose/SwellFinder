@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Dimensions, StyleSheet, View, ScrollView, TouchableOpacity, RefreshControl, ActivityIndicator } from 'react-native';
-
+import { StyleSheet, View, ScrollView, TouchableOpacity, RefreshControl, ActivityIndicator, Alert } from 'react-native';
 
 import colors from '../config/colors';
 import Screen from '../components/Screen';
@@ -17,8 +16,7 @@ import getSpotApi from '../api/spot';
 
 import getWeekDaysFromNow from '../utility/weekGenerator';
 
-const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
+
 
 
 const HomeScreen = ({ navigation }) => {
@@ -28,13 +26,38 @@ const HomeScreen = ({ navigation }) => {
     const [refreshing, setRefreshing] = useState(false);
     const [weekDays, setWeekDays] = useState(getWeekDaysFromNow);
     const [modalVisible, setModalVisible] = useState(false);
+    const [deleteSpot, deleteSpotFailed] = useState(false);
+    const [spots, setSpots] = useState([]);
+    let updatedOutlookData = [];
+
 
     const handleModal = () => {
         setModalVisible(!modalVisible);
     }
 
+    const refreshSpots = async () => {
+        const spots = await getSpotsApi.request();
 
-    let updatedOutlookData = [];
+        if (!spots) {
+            Alert.alert('Error', spots.data.error);
+        }
+
+        setSpots(spots.data);
+    }
+
+    const handleDelete = async (spot) => {
+        const result = await spotsApi.deleteSpot(spot);
+        
+        if (!result.ok) {
+            Alert.alert('Error', result.data.error);
+            return deleteSpotFailed(true);
+        }
+
+        Alert.alert('Success!', 'Spot removed.');
+        deleteSpotFailed(false);
+        refreshSpots();
+    };
+
     useEffect(() => {
         const getOutlookData = async () => {
             const params = await getSpotsApi.request();
@@ -50,7 +73,6 @@ const HomeScreen = ({ navigation }) => {
         getOutlookData();
     }, []);
 
-
     const onRefresh = useCallback(() => {
         setRefreshing(true);
         updatedOutlookData = [];
@@ -64,7 +86,7 @@ const HomeScreen = ({ navigation }) => {
 
             setRefreshing(false);
         }
-
+        
         refreshOutlookData();
         setOutlookData(updatedOutlookData);
     }, []);
@@ -100,7 +122,14 @@ const HomeScreen = ({ navigation }) => {
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{padding: '5%'}}>
                         {
                             getSpotsApi.data.map((spot, index) =>
-                                <AppCard key={index} title={spot.name} subTitle={spot.description} image={spot.image} onPress={() => navigation.navigate('SpotScreen', {spot: spot})}/>
+                                <AppCard 
+                                    key={index}
+                                    title={spot.name}
+                                    subTitle={spot.description}
+                                    image={spot.image}
+                                    onPress={() => navigation.navigate('SpotScreen', {spot: spot})}
+                                    onDelete={() => handleDelete(spot)}
+                                />
                         )}
                         </ScrollView>
                     }
