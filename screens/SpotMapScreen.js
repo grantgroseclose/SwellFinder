@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Dimensions, StyleSheet, Alert, View } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
+import { useNavigation } from '@react-navigation/native';
 import * as Yup from 'yup';
 
 import colors from '../config/colors';
@@ -19,8 +20,8 @@ const screenHeight = Dimensions.get('window').height;
 const validationSchema = Yup.object().shape({
     name: Yup.string().required().min(1).label('Name'),
     description: Yup.string().required().min(1).label('Description'),
-    latitude: Yup.string().required().min(5).label('Latitude'),
-    longitude: Yup.string().required().min(5).label('Longitude'),
+    latitude: Yup.string().required().min(1).label('Latitude'),
+    longitude: Yup.string().required().min(1).label('Longitude'),
     image: Yup.string().required()
 });
 
@@ -30,6 +31,7 @@ const validationSchema = Yup.object().shape({
 const SpotMapScreen = () => {
     const [marker, setMarker] = useState(null);
     const [setSpot, setSpotFailed] = useState(false);
+    const navigation = useNavigation();
 
     const handleSubmit = async (spot) => {
         const result = await spotsApi.addSpot(spot);
@@ -39,8 +41,11 @@ const SpotMapScreen = () => {
             return setSpotFailed(true);
         }
 
-        Alert.alert('Success!', 'Spot added!');
         setSpotFailed(false);
+
+        Alert.alert('Success!', 'Spot added!', [
+            { text: "Ok", onPress: () => navigation.navigate('Home') },
+        ]);
     };
 
 
@@ -54,7 +59,9 @@ const SpotMapScreen = () => {
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
             }}
-            onPress={(e) => setMarker(e.nativeEvent.coordinate)}
+            onPress={(e) => {
+                setMarker(e.nativeEvent.coordinate);
+            }}
             >
                 {marker &&
                     <Marker coordinate={marker}>
@@ -64,8 +71,8 @@ const SpotMapScreen = () => {
                             initialValues={{  
                                 name: '',
                                 description: '', 
-                                latitude: parseFloat(marker.latitude).toFixed(2), 
-                                longitude: parseFloat(marker.longitude).toFixed(2),
+                                latitude: '', 
+                                longitude: '',
                                 image: ''
                             }}
                             onSubmit={handleSubmit}

@@ -22,7 +22,7 @@ const validationSchema = Yup.object().shape({
 
 
 
-const RegisterScreen = (props) => {
+const RegisterScreen = ({ navigation }) => {
     const registerApi = useApi(usersApi.register);
     const [error, setError] = useState();
 
@@ -40,7 +40,9 @@ const RegisterScreen = (props) => {
           return;
         }
     
-        Alert.alert('Success!', 'Registration successful.');
+        Alert.alert('Success!', 'Registration successful.', [
+            { text: "Ok", onPress: () => navigation.navigate('Start') },
+        ]);
     };
 
     return (
