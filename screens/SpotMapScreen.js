@@ -44,6 +44,7 @@ const SpotMapScreen = () => {
     const requestPermission = async () => {
         const { granted } = await Location.requestForegroundPermissionsAsync();
         if (!granted) {
+            setLoading(false);
             Alert.alert('Optional', 'Enable location in your device settings.');
             return;
         }

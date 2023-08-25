@@ -28,8 +28,29 @@ const HomeScreen = ({ navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [deleteSpot, deleteSpotFailed] = useState(false);
     const [spots, setSpots] = useState([]);
-    let updatedOutlookData = [];
+    
+    useEffect(() => {
+        const getOutlookData = async () => {
+            const params = await getSpotsApi.request();
+            if (params.data.length === 0) {
+                setLoading(false);
+                return Alert.alert("No spots yet!", "Go to the Explore page to add spots!");
+            }
 
+            const forecast = await getSpotApi.getAllSpotsForecastData(params['data']);
+            forecast.forEach((spot) => {
+                updatedOutlookData.push(spot['wave_height_max']);
+            });
+
+            setOutlookData(updatedOutlookData);
+            setLoading(false);
+        }
+
+        getOutlookData();
+    }, []);
+    
+
+    let updatedOutlookData = [];
 
     const handleModal = () => {
         setModalVisible(!modalVisible);
@@ -57,21 +78,6 @@ const HomeScreen = ({ navigation }) => {
         deleteSpotFailed(false);
         refreshSpots();
     };
-
-    useEffect(() => {
-        const getOutlookData = async () => {
-            const params = await getSpotsApi.request();
-            const forecast = await getSpotApi.getAllSpotsForecastData(params['data']);
-            forecast.forEach((spot) => {
-                updatedOutlookData.push(spot['wave_height_max']);
-            });
-
-            setOutlookData(updatedOutlookData);
-            setLoading(false);
-        }
-
-        getOutlookData();
-    }, []);
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
