@@ -8,10 +8,10 @@ const validateWith = require("../middleware/validation");
 const UserModel = require('../models/Users');
 
 const validationSchema = Joi.object({
-  name: Joi.string().required().min(2),
-  username: Joi.string().required().min(6).max(18),
-  email: Joi.string().email().required(),
-  password: Joi.string().required().min(6).max(18),
+    name: Joi.string().required().min(2),
+    username: Joi.string().required().min(6).max(18),
+    email: Joi.string().email().required(),
+    password: Joi.string().required().min(6).max(18),
 });
 
 router.post("/", validateWith(validationSchema), async (req, res) => {

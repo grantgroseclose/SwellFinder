@@ -1,3 +1,5 @@
+// Adapted from CodeWithMosh Ultimate React Native Course
+
 import { useContext } from "react";
 import jwtDecode from "jwt-decode";
 

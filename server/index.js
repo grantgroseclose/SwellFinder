@@ -34,5 +34,5 @@ app.use("/api/tide", tide);
 
 const port = config.get("port");
 app.listen(port, function() {
-  console.log(`Server started on port ${port}...`);
+    console.log(`Server started on port ${port}...`);
 });

@@ -1,3 +1,5 @@
+// Adapted from CodeWithMosh Ultimate React Native Course
+
 import { AsyncStorage } from "react-native";
 import moment from "moment";
 

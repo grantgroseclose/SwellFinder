@@ -1,3 +1,5 @@
+// Adapted from CodeWithMosh Ultimate React Native Course
+
 import * as SecureStore from "expo-secure-store";
 import jwtDecode from "jwt-decode";
 
