@@ -3,7 +3,6 @@ import { Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 
 import colors from '../config/colors'
 
-const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 

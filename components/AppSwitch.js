@@ -5,14 +5,12 @@ import colors from '../config/colors';
 import AppText from './AppText';
 
 const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
 
 
 
 
 const AppSwitch = ({
     containerStyle,
-    navigation,
     selectionMode,
     option1,
     option2,
@@ -63,10 +61,8 @@ const AppSwitch = ({
 
 const styles = StyleSheet.create({
     switchContainer: {
-        // height: screenHeight * .06,
         width: screenWidth * .45,
         height: 44,
-        // width: 215,
         backgroundColor: colors.blue,
         borderRadius: 25,
         flexDirection: 'row',

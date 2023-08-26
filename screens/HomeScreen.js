@@ -85,6 +85,11 @@ const HomeScreen = ({ navigation }) => {
         
         const refreshOutlookData = async () => {
             const params = await getSpotsApi.request();
+            if (params.data.length === 0) {
+                setRefreshing(false);
+                return Alert.alert("No spots yet!", "Go to the Explore page to add spots!");
+            }
+
             const forecast = await getSpotApi.getAllSpotsForecastData(params['data']);
             forecast.forEach((spot) => {
                 updatedOutlookData.push(spot['wave_height_max']);

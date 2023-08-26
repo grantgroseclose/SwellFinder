@@ -4,10 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import AppText from "./AppText";
 import colors from "../config/colors";
-import AppTextInput from "./AppTextInput";
-import AppIcon from "./AppIcon";
 
-const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 

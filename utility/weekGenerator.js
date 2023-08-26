@@ -6,7 +6,6 @@ const getWeekDaysFromNow = () => {
     const d = new Date();
     let i = d.getDay();
     const today = weekDay[i];
-    // let weeklyOutlook = ['Today'];
     let weeklyOutlook = [today];
 
     let j = (i === 6) ? 0 : i + 1;

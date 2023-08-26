@@ -3,7 +3,6 @@ import { Dimensions, View, StyleSheet } from "react-native";
 
 import colors from "../config/colors";
 
-const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 

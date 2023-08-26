@@ -10,7 +10,7 @@ const screenHeight = Dimensions.get('window').height;
 
 
 
-const OutlookCard = ({ width, height, title, cardDetails, }) => {
+const OutlookCard = ({ title, cardDetails }) => {
   return (
     <View style={styles.card}>
         <View style={styles.titleContainer}>
