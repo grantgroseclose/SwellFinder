@@ -6,7 +6,6 @@ import authStorage from "../auth/storage";
 
 
 const apiClient = create({
-    // baseURL: "http://192.168.1.69:9000/api",
     baseURL: "https://swell-finder-md-a9b778e924c6.herokuapp.com/api"
 });
 
