@@ -1,4 +1,4 @@
-// Adapted from CodeWithMosh Ultimate React Native Course
+// Adapted from [1] Hamedani, M. (2023). The Ultimate React Native Series. CodeWithMosh. [Accessed] August, 2023. [Available] codewithmosh.com.
 
 import { AsyncStorage } from "react-native";
 import moment from "moment";

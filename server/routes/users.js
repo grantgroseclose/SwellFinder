@@ -25,10 +25,10 @@ router.post("/", validateWith(validationSchema), async (req, res) => {
     } else {
         const hashed_pass = await bcrypt.hash(req.body.password, 10);
         const newUser = new UserModel({
-          name: req.body.name, 
-          username: req.body.username,
-          email: req.body.email,
-          password: hashed_pass
+            name: req.body.name, 
+            username: req.body.username,
+            email: req.body.email,
+            password: hashed_pass
         });
         const user = await UserModel.create(newUser);
         res.status(201).send(user);

@@ -34,14 +34,14 @@ const AccountScreen = (props) => {
         const result = await updatePasswordApi.request(userInfo);
     
         if (!result.ok) {
-          if (result.data) setError(result.data.error);
-          else {
-            setError("An unexpected error occurred.");
-            Alert.alert('Error', 'An unexpected error occurred.');
+            if (result.data) setError(result.data.error);
+            else {
+                setError("An unexpected error occurred.");
+                Alert.alert('Error', 'An unexpected error occurred.');
+                return;
+            }
+            Alert.alert('Error', result.data.error);
             return;
-          }
-          Alert.alert('Error', result.data.error);
-          return;
         }
         
         Alert.alert('Success!', 'Your password has now been updated.');
@@ -134,8 +134,7 @@ const styles = StyleSheet.create({
         flex: 2,
         padding: 10,
         flex: 4,
-        width: '100%',
-        // justifyContent: 'space-between'
+        width: '100%'
     }
 });
 

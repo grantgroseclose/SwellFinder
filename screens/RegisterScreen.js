@@ -30,14 +30,14 @@ const RegisterScreen = ({ navigation }) => {
         const result = await registerApi.request(userInfo);
     
         if (!result.ok) {
-          if (result.data) setError(result.data.error);
-          else {
-            setError("An unexpected error occurred.");
-            Alert.alert('Error', 'An unexpected error occurred.');
+            if (result.data) setError(result.data.error);
+            else {
+                setError("An unexpected error occurred.");
+                Alert.alert('Error', 'An unexpected error occurred.');
+                return;
+            }
+            Alert.alert('Error', result.data.error);
             return;
-          }
-          Alert.alert('Error', result.data.error);
-          return;
         }
     
         Alert.alert('Success!', 'Registration successful.', [

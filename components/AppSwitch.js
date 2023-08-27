@@ -1,4 +1,4 @@
-// Adapted from https://www.techup.co.in/custom-toggle-switch-in-react-native/
+// Adapted from [2] Gite, S. (2021). Custom toggle switch in React Native. Techup Media. [Accessed] August, 2023. [Available] https://www.techup.co.in/custom-toggle-switch-in-react-native/
 
 import React, { useState } from 'react';
 import { StyleSheet, View, TouchableOpacity, Dimensions } from 'react-native';
