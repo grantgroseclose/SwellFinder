@@ -138,6 +138,7 @@ const HomeScreen = ({ navigation }) => {
                                     title={spot.name}
                                     subTitle={spot.description}
                                     image={spot.image}
+                                    editable
                                     onPress={() => navigation.navigate('SpotScreen', {spot: spot})}
                                     onDelete={() => handleDelete(spot)}
                                 />

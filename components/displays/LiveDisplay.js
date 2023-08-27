@@ -83,7 +83,7 @@ const LiveDisplay = ({ spot, spotData, tideLabels, tideData }) => {
                 </View>
 
                 <View style={{alignItems: 'center'}}>
-                    <AppCard title={spot.name} subTitle={spot.description} image={spot.image}/>
+                    <AppCard title={spot.name} subTitle={spot.description} image={spot.image} editable={false} />
                 </View>
             </View>
 

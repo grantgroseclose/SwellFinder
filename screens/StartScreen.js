@@ -32,22 +32,22 @@ const StartScreen = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
-  logoContainer: {
-    padding: screenWidth * .05,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  logoText: {
-    fontFamily: 'Inter-Black',
-    fontSize: screenHeight * .05,
-    fontWeight: 'bold',
-    color: colors.white
-  },
-  buttonsContainer: {
-    padding: screenWidth * .05,
-    width: '100%'
-  }
+    logoContainer: {
+        padding: screenWidth * .05,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    logoText: {
+        fontFamily: 'Inter-Black',
+        fontSize: screenHeight * .05,
+        fontWeight: 'bold',
+        color: colors.white
+    },
+    buttonsContainer: {
+        padding: screenWidth * .05,
+        width: '100%'
+    }
 });
 
 export default StartScreen;
